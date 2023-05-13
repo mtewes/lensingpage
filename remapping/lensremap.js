@@ -58,8 +58,10 @@ var smootherstep = function(t) {
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
+        //x: evt.clientX - rect.left,
+        //y: evt.clientY - rect.top
+        x: evt.clientX,
+        y: evt.clientY
     };
 }
 
@@ -73,7 +75,7 @@ function updatecanvas(canvas, px, py) {
     xmin = oldx - r;
     xmax = oldx + r;
     if (xmin < 0) {
-        xmin = 0;
+        xmin = 0; //coordinates not out of bounds
     }
     if (xmax > w) {
         xmax = w;
@@ -87,7 +89,7 @@ function updatecanvas(canvas, px, py) {
     if (ymax > h) {
         ymax = h;
     }
-    for (y = ymin; y < ymax; y++) {
+    for (y = ymin; y < ymax; y++) { //iterating over the circle
         for (x = xmin; x < xmax; x++) {
             index = (x + y * w) << 2;
             imageDataDst.data[index] = imageDataSrc.data[index++];
@@ -120,13 +122,13 @@ function updatecanvas(canvas, px, py) {
         ymax = h;
     }
 
-    var tol = -15;
+    var tol = -15; //sets size of bh
     var maxSize = w * (h - 1) + w - 1;
 
     for (y = ymin; y < ymax; y++) {
         index = (xmin + y * w) << 2;
         for (x = xmin; x < xmax; x++) {
-            x1 = x - px;
+            x1 = x - px; //separation from mouse pos
             y1 = y - py;
             d = Math.sqrt(x1 * x1 + y1 * y1);
             if (d <= r) {
