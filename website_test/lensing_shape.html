@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Der Gravitationslinseneffekt</title>
+	<link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="lens_geometry.js"></script>
+  </head>
+  <body>
+
+    <div class="header">
+        <button class="button button_header" type="button" onclick="window.location.href='intro.html'">Die Euclid Mission</button>
+        <h3>zur Erforschung dunkler Materie und dunkler Energie</h3>
+    </div>
+    
+    <div class="navbar">
+        <a href="intro.html">Die Euclid Mission</a>
+        <a href="dark_matter.html">Dunkle Materie</a>
+        <div class="dropdown">
+            <button class="dropbtn">Der Gravitationslinseneffekt<span class="navbar-toggler-icon"></span></button>
+            <div class="dropdown-content">
+                <a href="lensing_intro.html">Der Gravitationslinseneffekt</a>
+                <a href="lensing_shape.html">Verzerrung des Bildes</a>
+            </div>
+        </div>
+    </div>
+
+      <div class="center">
+
+        <h1>Der Gravitationslinseneffekt</h1>
+
+        <p>
+            -Neben der scheinbaren Position einer Galaxie verändert Lensing auch die Form und die Größe dieser. Die Vergrößerung durch lensing ermöglicht es auch extrem weit entfernte, hoch rotverschobene Galaxien zu beobachten, die andernfalls nicht von Teleskopen aufgelöst werden könnten.
+            -Die Form des Bildes einer Galaxie kann so stark verzerrt werden, dass man diese auf den ersten Blick nicht als typische Galaxie erkennen würde. In Aufnahmen in Richtung sehr großer Massenverteilungen wie Galaxienhaufen, ist es deshalb nicht unüblich sehr stark verzerrte Bilder von Galaxien im Hintergrund zu beobachten. Diese können in einer langgezogenen Bogenform erscheinen, die sich sehr weit über den Himmel erstreckt.
+                -Hier vielleicht Beispielbilder wie ein Deep-Field
+            -Außerdem kann ein und dasselbe Objekt auch mehrfach abgebildet werden, sodass man beispielsweise 4 mal dieselbe Galaxie an verschiedenen Positionen beobachten kann.
+            -Euclid macht sich allerdings den schwachen Gravitationslinseneffekt zu Nutze. In diesem Fall treten keine Mehrfachbilder einer Galaxie auf und die Verzerrungen des Bildes sind so gering, dass sie an sich nicht direkt zu erkennen sind. Die Verzerrung der Form macht sich nur durch eine kleine Veränderung der Elliptizität der Galaxie bemerkbar.
+            -Eine Spiralgalaxie wie unsere Milchstraße ist eine Scheibengalaxie, dessen Scheibe im Allgemeinen eine elliptische Form hat. Je nachdem unter welchem Winkel wir eine solche Galaxie sehen (z.B. direkt von der Seite), kann die Elliptizität der Galaxie sehr unterschiedlich sein.
+            -Die beobachtete Elliptizät einer Galaxie setzt sich daher aus zwei Komponenten zusammen, der intrinsischen Elliptizität der Galaxie selbst und der Veränderung dieser intrinsischen Elliptizität durch den schwachen Gravitationslinseneffekt.
+            -Wir haben über die intrinsische Form der Galaxie allerdings keine vollständige Information, da die beobachtete Form ja durch den Gravitationslinseneffekt beeinflusst wird. Daher können wir auch keine Aussagen darüber machen, wie groß der Grad der Verzerrung der Form durch den Gravitationslinseneffekt ist, wenn wir nur eine einzige Galaxie beobachten. Über die Massenverteilung, die für die Verzerrung der Galaxie verantwortlich ist, ließe sich somit auch keine Aussage treffen.
+            -Euclid wird allerdings eine sehr große Zahl solcher Galaxien beobachten.
+        </p>
+
+        <div id="canvas-container">
+        <label for="einst_rad">Einstein radius:</label>
+        <input type="number" id="einst_rad" name="einst_rad" value="60" min="1" max="100"> arcmin
+        <canvas id="dst" width="701" height="701"></canvas>
+        </div>
+
+      </div>
+      <div class="footer">test</div>
+  </body>
+</html>

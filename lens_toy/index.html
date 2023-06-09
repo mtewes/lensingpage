@@ -4,16 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Simulation Gravitationslinseneffekt</title>
-    <script type="text/javascript" src="lens_geometry.js"></script>
+    <script type="text/javascript" src="lens_dm_wl_map_gal_grid.js"></script>
 	  
     <style>
       canvas{
         display: inline-block;
+        cursor: crosshair;
       }
-      canvas#dst:hover {
-        cursor: none;
-      }
-
     </style>
   
   </head>
@@ -26,16 +23,35 @@
       
     </p>
     <label for="einst_rad">Einstein radius:</label>
-    <input type="number" id="einst_rad" name="einst_rad" value="60" min="1" max="100">
+    <input type="number" id="einst_rad" name="einst_rad" value="10" min="1" max="100">
     <label for="srcx">source x-coordinate:</label>
     <input type="number" id="srcx" name="srcx" value="-50" min="-305" max="305">
     <label for="srcy">source y-coordinate:</label>
     <input type="number" id="srcy" name="srcy" value="70" min="-305" max="305">
 
-    <canvas id="dst" width="701" height="701">
-    Random Canvas
-    </canvas>
-    
+    <p>
+      <label for="gal_num">Number of galaxies:</label>
+      <!-- <input type="number" id="gal_num" name="gal_num" value="5" min="1" max="20"> -->
+      <input type="range" id="gal_num" min="1" max="20" value="7" class="slider">
+      <output id="gal_num_out"></output>
+    </p>
+    <p>
+      <label for="alpha_scale">Deflection angle scale factor:</label>
+      <input type="range" id="alpha_scale" min="0" max="50" value="25" class="slider">
+      <output id="alpha_scale_out"></output>
+    </p>
+    <p><button id="generate">Generate</button></p>
+    <p>
+      <label for="x_coord">X-coordinate:</label>
+      <input type="number" id="x_coord" name="x_coord" readonly="true">
+      <label for="y_coord">Y-coordinate:</label>
+      <input type="number" id="y_coord" name="y_coord" readonly="true">
+    </p>
+
+    <div id="stack">
+      <canvas id="dst" width="701" height="701"></canvas>
+      <canvas id="dst2" width="701" height="701"></canvas>
+    <div>
 
     </div>
   </body>

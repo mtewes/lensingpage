@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simulation Gravitationslinseneffekt</title>
+	  
+    <style>
+      canvas{
+        display: inline-block;
+        cursor: crosshair;
+      }
+      #vid {
+        display: none; /* user can see video on canvas */
+      }
+    </style>
+  
+  </head>
+  <body>
+    <video id="vid" autoplay>Stream</video>
+    <canvas id="lens" width="700" height="700"></canvas>
+  </body>
+  <script type="text/javascript" src="lens_cam.js"></script>
+</html>
