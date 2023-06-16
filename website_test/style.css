@@ -15,7 +15,7 @@
     font-family: Bahnschrift Light;
   }
 
-  .navbar {
+/*  .navbar {
     overflow: hidden;
     background-color: #333;
   }
@@ -32,13 +32,12 @@
   .navbar a:hover, .dropdown:hover .dropbtn {
     background-color: #545467;
   }
-/* The dropdown container */
+
 .dropdown {
     float: left;
     overflow: hidden;
   }
   
-  /* Dropdown button */
   .dropdown .dropbtn {
     font-size: large;
     border: none;
@@ -46,14 +45,13 @@
     color: white;
     padding: 14px 16px;
     background-color: inherit;
-    font-family: inherit; /* Important for vertical align on mobile phones */
-    margin: 0; /* Important for vertical align on mobile phones */
+    font-family: inherit; 
+    margin: 0; 
   }
   .dropbtn a:hover {
     background-color: #545467;
   }
 
-  /* Dropdown content (hidden by default) */
 .dropdown-content {
     display: none;
     position: absolute;
@@ -62,7 +60,6 @@
     z-index: 1;
   }
   
-  /* Links inside the dropdown */
   .dropdown-content a {
     float: left;
     display: block;
@@ -74,15 +71,13 @@
     font-family: inherit;
   }
   
-  /* Add a grey background color to dropdown links on hover */
   .dropdown-content a:hover {
     background-color: #545467;
   }
   
-  /* Show the dropdown menu on hover */
   .dropdown:hover .dropdown-content {
     display: block;
-  }
+  }*/
 
   body {
     height: 100%;
@@ -98,6 +93,11 @@
 }
 
   h1 {color: #a6a5eb; text-indent: 0px;}
+  h2 {color: #a6a5eb; text-indent: 0px;}
+  h3 {color: #a6a5eb; text-indent: 0px;}
+  h4 {color: #a6a5eb; text-indent: 0px;}
+  h5 {color: #a6a5eb; text-indent: 0px;}
+  h6 {color: #a6a5eb; text-indent: 0px;}
 
   .center {
     margin: auto;

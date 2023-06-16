@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="lens_dm_wl.js"></script>
+</head>
+  <body>
+    <div class="header">
+        <button class="button button_header" type="button" onclick="window.location.href='intro.html'">Die Euclid Mission</button>
+        <h3>zur Erforschung dunkler Materie und dunkler Energie</h3>
+    </div>
+    
+    <nav class="navbar bg-dark border-bottom border-bottom-dark" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="bootstrap_test.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="intro.html">Die Euclid Mission</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="dark_matter.html">Dunkle Materie</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Der Gravitationslinseneffekt</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="lensing_intro.html">Der Gravitationslinseneffekt</a></li>
+                      <li><a class="dropdown-item" href="lensing_shape.html">Verzerrung des Bildes</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+    </nav>
+
+    <!-- <div class="navbar">
+        <a href="intro.html">Die Euclid Mission</a>
+        <a href="dark_matter.html">Dunkle Materie</a>
+        <div class="dropdown">
+            <button class="dropbtn">Der Gravitationslinseneffekt</button>
+            <div class="dropdown-content">
+                <a href="lensing_intro.html">Der Gravitationslinseneffekt</a>
+                <a href="lensing_shape.html">Verzerrung des Bildes</a>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="center">
+        <h1>Die Euclid Mission</h1>
+
+        <p>
+            Bei dieser Aufnahme handelt es sich um ein sogenanntes Deep Field, beobachtet vom James Webb Space Telescope (JWST).
+          </p>
+
+          <!--<div class="gallery">
+            <a target="_blank" href="jwst_deepfield.jpg">
+              <img src="jwst_deepfield.jpg" alt="JWST Deep-Field">
+            </a>
+            <div class="desc">
+            <div class="d-grid gap-2">
+            <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                <a class="btn btn-outline-primary btn-sm" data-bs-toggle="collapse" href="#jwst_collapse" role="button" aria-expanded="false" aria-controls="jwst_collapse">
+                    <h5 style="color: white">Ein Deep-Field des JWST, aber was ist hier eigentlich genau zu sehen? &#9663;</h5>
+                </a>
+                <div class="collapse" id="jwst_collapse">
+                    <div class="card card-body" style="background-color: #78788f">
+                        In diesem Bild sind tausende Galaxien in verschiedenen Entfernungen zu sehen. Im Vordergrund des Bildes befinden sich die weißen Galaxien, wie die große elliptische Galaxie im Zentrum.
+                        Um diese herum sind andere, kleinere weiße Galaxien verteilt, die zusammen einen Galaxienhaufen bilden.
+                        Daneben sind allerdings auch viele deutlich rötere Galaxien abgebildet, die sich von uns aus betrachtet hinter dem Galaxienhaufen befinden. Die Formen dieser Galaxien weichen in der Regel
+                        allerdings stark von denen der weißen Galaxien im Galaxienhaufen ab - es sind zahlreiche stark verzerrte Bögen zu erkennen, die alles andere als eine natürliche Form einer Galaxie darstellen.
+                    </div>
+                  </div>
+                <a href="https://esawebb.org/images/weic2209a/" class="btn btn-primary btn-sm">Quelle: NASA, ESA, CSA, and STScI</a>
+            </div>
+            </div>
+            </div>
+          </div>-->
+
+          <figure class="figure" style="margin: 0px; border: 1px solid #ccc; float: center; width: 100%; text-indent: 0px;">
+            <div id="carouselExampleIndicators" class="carousel slide">
+              <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="jwst_deepfield.jpg" class="d-block w-100" alt="JWST Deep-Field">
+                  <div class="carousel-caption d-none d-md-block">
+                    <a href="https://esawebb.org/images/weic2209a/" class="btn btn-outline-secondary btn-sm">Quelle: NASA, ESA, CSA, and STScI</a>
+                  </div>
+                </div>
+                <div class="carousel-item">
+                  <img src="hubble_GAL-CLUS-022058s.jpg" class="d-block w-100" alt="Hubble GAL-CLUS-022058s">
+                  <div class="carousel-caption d-none d-md-block">
+                    <a href="https://esahubble.org/images/potw2050a/" class="btn btn-outline-secondary btn-sm">Quelle: ESA/Hubble & NASA, S. Jha</a>
+                  </div>
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+
+            <figcaption class="figure-caption">
+              <div class="d-grid gap-2">
+                <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                    <a class="btn btn-dark btn-sm" data-bs-toggle="collapse" href="#jwst_collapse" role="button" aria-expanded="false" aria-controls="jwst_collapse">
+                        <h5 style="color: white">Beobachtungen des Gravitationslinseneffekts mit dem JWST und dem HST, aber was ist hier eigentlich genau zu sehen? &#9663;</h5>
+                    </a>
+                    <div class="collapse" id="jwst_collapse">
+                        <div class="card card-body" style="background-color: #78788f">
+                          <ol>
+                            <li>
+                            Im ersten Bild sind tausende Galaxien in verschiedenen Entfernungen zu sehen. Im Vordergrund des Bildes befinden sich die weißen Galaxien, wie die große elliptische Galaxie im Zentrum.
+                            Um diese herum sind andere, kleinere weiße Galaxien verteilt, die zusammen einen Galaxienhaufen bilden.
+                            Daneben sind allerdings auch viele deutlich rötere Galaxien abgebildet, die sich von uns aus betrachtet hinter dem Galaxienhaufen befinden. Die Formen dieser Galaxien weichen in der Regel
+                            allerdings stark von denen der weißen Galaxien im Galaxienhaufen ab - es sind zahlreiche stark verzerrte Bögen zu erkennen, die alles andere als eine natürliche Form einer Galaxie darstellen.
+                            </li>
+                            <li>
+                            Im zweiten Bild wird das Licht einer Hintergrundgalaxie von der Gravitation des im Vordergrund liegenden Galaxienhaufen abgelenkt, dass das resultierende
+                            Bild der Galaxie stark vergrößert und verzerrt wird, sodass es eine Ringform annimmt - bei diesem Phänomen sprechen wir von einem Einstein Ring.
+                            </li>
+                          </ol>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </figcaption>
+          </figure>
+    
+            <p></p>
+            <p>
+                Die große Massenverteilung des Galaxienhaufens im Vordergrund des Bildes wirkt hier wie eine riesige Linse im Kosmos.
+                Das Licht, das von dahinterliegenden Galaxien durch oder nahe am Galaxienhaufen vorbei läuft, wird durch dessen Masse abgelenkt - so ähnlich wie es mit dem Glas einer optischen Linse der Fall ist.
+                Dieses Phänomen der Ablenkung von Licht durch die Anwesenheit einer Masse nennt man den Gravitationslinseneffekt.
+                Beschrieben durch Einsteins Allgemeine Relativitästheorie, lassen sich mit der Beobachtung des Gravitationslinseneffekts
+                Aussagen über die Massenverteilung, wie den hier vorliegenden Galaxienhaufen, treffen.
+              </p>
+
+          <div class="alert alert-primary" role="alert">
+            Die Euclid Mission wird sich den Gravitationslinseneffekt bei der Beobachtung von Millarden an Galaxien zu Nutze machen, um mehr über die Verteilung der dunklen Materie im Universum herauszufinden.
+          </div>
+
+          <div class="accordion" id="acc_dm">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_dm" aria-expanded="false" aria-controls="collapse_dm" style="background-color: #cce5ff;">
+                    <h2>Was ist Dunkle Materie?</h2>
+                </button>
+              </h2>
+              <div id="collapse_dm" class="accordion-collapse collapse show" data-bs-parent="#collapse_dm" style="background-color: #cce5ff;">
+                <div class="accordion-body">
+                    Seit vielen Jahrzehnten gibt es in astronomischen Beobachtungen starke Indizien dafür, dass neben der "normalen" (auch baryonischen) Materie
+                    noch eine weitere Form von Materie, die sogenannte dunkle Materie, im Universum vorhanden ist.
+                    Die Schwierigkeit für einen direkten Nachweis von dunkler Materie liegt darin, dass diese, anders als die baryonische Materie, 
+                    nicht mit Licht wechselwirkt (daher auch die Bezeichnung "dunkel"). Wir können ihre Existenz im Universum deshalb nur durch ihre
+                    Gravitation nachweisen.
+                    Aus welchen Teilchen die dunkle Materie besteht und wie diese in irdischen Laboren nachgewiesen werden könnten, ist noch ein großes Rätsel.
+                    <br>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                      <a class="btn btn-success" href="dark_matter.html" role="button">Hier erfährst du mehr über die dunkle Materie</a>
+                    </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <br>
+            <h1>Der Gravitationslinseneffekt</h1>
+            <p>
+                Auch wenn wir die dunkle Materie nicht durch elektromagnetische Strahlung beobachten können, macht diese
+                sich dennoch durch ihre Gravitation bemerkbar. Eine Möglichkeit ihre Verteilung im Universum zu analysieren
+                besteht im Gravitationslinseneffekt.
+                <br>
+                Dieser beschreibt die Ablenkung von Lichtstrahlen durch die Anwesenheit von Masse auf der Sichtlinie. Als
+                Konsequenz können die Bilder entfernter Galaxien in ihrer Position, Form, Größe und Helligkeit verändert werden.
+                Wie sich die Anwesenheit von dunkler Materie durch den Gravitationslinseneffekt auf das Licht entfernter Galaxien auswirkt, ist im Folgenden vereinfacht dargestellt.
+            </p>
+
+            <table class="table" style="border-collapse: collapse; width: 100%; border-radius: 6px; overflow: hidden;">
+                <tbody>
+                  <tr>
+                    <td scope="row" style="background-color: #cce5ff">
+                        <div id="canvas-container">
+                            <canvas id="wl_kappa_map" width="700" height="700"></canvas>
+                        </div>
+                    </td>
+                    <td scope="row" style="background-color: #cce5ff">
+                        <h3>Schwacher Gravitationslinseneffekt</h3>
+                        <p>
+                        Eigentlich ist die rote Galaxie kreisrund, jedoch sorgt die Masse auf und um die Sichtlinie zur Galaxie dafür, dass wir
+                        ein verschobenes und verzerrtes Bild beobachten.
+                        Die Veränderungen von Position, Form und Größe des Bildes der Galaxie sind so klein, dass wir vom schwachen Gravitationslinseneffekts reden, den Euclid für viele Galaxien beobachtet. 
+                        <br>
+                        Die Verteilung der dunklen Materie ist hier zufällig generiert -
+                        die Dichte fluktuiert um einen Mittelwert herum, sodass es Stellen größerer und kleinerer Materiedichte gibt.
+                        Dort wo sich viel Masse auf der Sichtlinie befindet, wird ein stärker abgelenktes, verzerrtes und vergrößertes
+                        Bild der Galaxie beobachtet.
+                        <br>
+                        </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            Euclid wird den schwachen Gravitationslinseneffekt bei einigen Millarden Galaxien beobachten, denn nur so lassen sich
+            systematische Analaysen durchführen, um auf die Verteilung der dunklen Materie im Universum zu schließen.
+            
+            <p>
+              <label for="gal_num">Number of galaxies:</label>
+              <input type="range" id="gal_num" min="1" max="20" value="7" class="slider">
+              <output id="gal_num_out"></output>
+            </p>
+            <p>
+              <label for="alpha_scale">Deflection angle scale factor:</label>
+              <input type="range" id="alpha_scale" min="0" max="50" value="25" class="slider">
+              <output id="alpha_scale_out"></output>
+            </p>
+            <div id="stack">
+              <canvas id="grid_src" width="700" height="700"></canvas>
+              <canvas id="grid_lens" width="700" height="700"></canvas>
+            <div>
+    
+    <div class="footer">test</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+  </body>
+</html>
