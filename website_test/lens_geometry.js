@@ -1,45 +1,34 @@
-var oldx = 0;
-var oldy = 0;
-
 var imageDataDst, imageDataSrc;
 
-w = 701;
-h = 701;
+var canvas = document.getElementById('strong_lensing');
+var dst = canvas.getContext('2d');
 
-lens_x=Math.round(w/2);
-lens_y=Math.round(h/2);
+var w = canvas.width;
+var h = canvas.height;
+var lens_x=Math.round(w/2);
+var lens_y=Math.round(h/2);
 
-var lerp = function(a, b, t) {
-    return (b - a) * (1-Math.exp(-t)) + a;
+let alpha_x = new Array(w);
+let alpha_y = new Array(w);
+let detA = new Array(w);
+for(var i=0; i<w; i++){
+    alpha_x[i] = new Array(h);
+    alpha_y[i] = new Array(h);
+    detA[i] = new Array(h);
 }
 
 window.onload = function() {
-    w = img.width;
-    h = img.height;
-
-    canvas = document.querySelector("canvas");
-    canvas.width = w;
-    canvas.height = h;
-
-    dst = canvas.getContext("2d");
-
-    dst.drawImage(img, 0, 0, w, h);
+    dst.fillStyle = 'black';
+    dst.fillRect(0,0,w,h);
     imageDataSrc = dst.getImageData(0, 0, w, h);
     imageDataDst = dst.getImageData(0, 0, w, h);
 
-    let alpha_x = new Array(w);
-    let alpha_y = new Array(w);
-    for(var i=0; i<w; i++){
-        alpha_x[i] = new Array(h);
-        alpha_y[i] = new Array(h);
-    }
-    for(var x=0; x<w; x++){
-        for(var y=0; y<h; y++){
-            theta = Math.sqrt(Math.pow(x - lens_x, 2) + Math.pow(lens_y - y, 2));
-            alpha_x[x][y] = (x - lens_x)/Math.pow(theta, 2);
-            alpha_y[x][y] = (lens_y - y)/Math.pow(theta, 2);
-        }
-    }
+    var or=30*Math.PI/180; //orientation in rad
+    var q=0.7; //axis ratio
+    var a=100; //major semi-axis
+    var thetaE=a*1.;
+    var thetaC=thetaE*0.1;
+    drawlens(or, q, a, thetaE, thetaC);
 
     let curX;
     let curY;
@@ -48,19 +37,10 @@ window.onload = function() {
     canvas.addEventListener("mousedown", () => pressed = true);
     canvas.addEventListener("mouseup", () => pressed = false);
 
-    beta_x = -50;
+    beta_x = -100;
     beta_y = 70;
-    var thetaE = document.getElementById('einst_rad').value;
-    
-    drawcanvas(canvas, beta_x, beta_y, thetaE, alpha_x, alpha_y);
-    document.addEventListener('input', function(){
-        thetaE = document.getElementById('einst_rad').value;
-        drawcanvas(canvas, beta_x, beta_y, thetaE, alpha_x, alpha_y);
-        /*canvas.addEventListener('mousemove', function(evt) {
-            var mousePos = getMousePos(canvas, evt);
-            drawcanvas(canvas, mousePos.x, mousePos.y, thetaE);
-        }, false);*/
-    })
+
+    drawcanvas(beta_x, beta_y, alpha_x, alpha_y);
 
     var scrollX = 0;
     var scrollY = 0;
@@ -69,80 +49,68 @@ window.onload = function() {
         scrollY = e.deltaY;
     })
     document.addEventListener("mousemove", (e) => {
-        //curX = e.clientX;
-        //curY = e.clientY;
         var bounds = canvas.getBoundingClientRect();
         curX = e.clientX - bounds.left - scrollX - (bounds.right - bounds.left)/2;
         curY = -(e.clientY - bounds.top - scrollY - (bounds.bottom - bounds.top)/2);
-        if(pressed==true){drawcanvas(canvas, curX, curY, thetaE, alpha_x, alpha_y);}
+        if(pressed==true){drawcanvas(curX, curY, alpha_x, alpha_y);}
     });
 };
 
-function getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-        //x: evt.clientX - rect.left,
-        //y: evt.clientY - rect.top
-        x: evt.clientX,
-        y: evt.clientY
-    };
+function drawlens(or, q, a, thetaE, thetaC){
+    var rho;
+    eps = (1-q)/(1+q);
+    for(var x=0; x<w; x+=0.5){
+        for(var y=0; y<h; y+=0.5){
+            //rho = Math.sqrt(Math.pow(x-lens_x,2)*q + Math.pow(lens_y-y,2)/q);
+            //x_rot = lens_x + Math.round((x-lens_x)*Math.cos(or) - (lens_y-y)*Math.sin(or));
+            //y_rot = lens_y - Math.round((x-lens_x)*Math.sin(or) + (lens_y-y)*Math.cos(or));
+            //index = (x_rot + y_rot*w)*4;
+            x_rot = (x-lens_x)*Math.cos(or) + (lens_y-y)*Math.sin(or);
+            y_rot = -(x-lens_x)*Math.sin(or) + (lens_y-y)*Math.cos(or);
+            rho = Math.sqrt(Math.pow(x_rot,2)*q + Math.pow(y_rot,2)/q);
+            index = (Math.round(x) + Math.round(y)*w)*4;
+            imageDataSrc.data[index] = imageData_gauss(rho, a/2.8, 200);
+            imageDataSrc.data[index+1] = imageData_gauss(rho, a/2.8, 200);
+            imageDataSrc.data[index+2] = imageData_gauss(rho, a/2.8, 100);
+            imageDataSrc.data[index+3] = 255;
+
+            if(x<=w-0.9 && y<=h-0.9){
+                var Y = Math.sqrt(Math.pow(rho,2)+Math.pow(thetaC,2));
+                a_x = (1-Math.pow(eps,2))*thetaE/(2*Math.sqrt(eps))*Math.atan(2*Math.sqrt(eps)*x_rot/((1-Math.pow(eps,2))*Y + Math.pow(1-eps,2)*thetaC));
+                a_y = (1-Math.pow(eps,2))*thetaE/(2*Math.sqrt(eps))*Math.atanh(2*Math.sqrt(eps)*y_rot/((1-Math.pow(eps,2))*Y + Math.pow(1-eps,2)*thetaC));
+                alpha_x[Math.round(x)][Math.round(y)] = a_x/q*Math.cos(or) - a_y*q*Math.sin(or);
+                alpha_y[Math.round(x)][Math.round(y)] = a_x/q*Math.sin(or) + a_y*q*Math.cos(or);
+                //alpha_x[Math.round(x)][Math.round(y)] = (x-lens_x)*q*thetaE/Math.sqrt(Math.pow(rho,2) + Math.pow(thetaC,2));
+                //alpha_y[Math.round(x)][Math.round(y)] = (lens_y-y)/q*thetaE/Math.sqrt(Math.pow(rho,2) + Math.pow(thetaC,2));
+                //alpha_x[Math.round(x)][Math.round(y)] = (1-Math.pow(eps,2))*thetaE/(2*Math.sqrt(eps))*Math.atan(2*Math.sqrt(eps)*x_rot/((1-Math.pow(eps,2))*Math.sqrt(Math.pow(rho,2)+Math.pow(thetaC,2)) + Math.pow(1-eps,2)*thetaC));
+                //alpha_x[Math.round(x)][Math.round(y)] = (1-Math.pow(eps,2))*thetaE/(2*Math.sqrt(eps))*Math.atanh(2*Math.sqrt(eps)*y_rot/((1-Math.pow(eps,2))*Math.sqrt(Math.pow(rho,2)+Math.pow(thetaC,2)) + Math.pow(1-eps,2)*thetaC));
+                detA[Math.round(x)][Math.round(y)] = 1 - thetaE/Y + (1-Math.pow(eps,2))*thetaC*Math.pow(thetaE,2) / (Y*(2*(1+Math.pow(eps,2))*Math.pow(thetaC,2) + Math.pow(x_rot,2) + Math.pow(y_rot,2) + 2*(1-Math.pow(eps,2))*Y*thetaC));
+                if(Math.abs(detA[Math.round(x)][Math.round(y)])<0.01){
+                    imageDataSrc.data[index+1] = 255;
+                }
+            }
+        }
+    }
+    dst.putImageData(imageDataSrc, 0, 0);
 }
 
-function drawcanvas(canvas, beta_x, beta_y, thetaE, alpha_x, alpha_y) {
-    var context = canvas.getContext('2d');
+function drawcanvas(beta_x, beta_y, alpha_x, alpha_y) {
     for(var i=0; i<h*w*4; i++){
         imageDataDst.data[i] = imageDataSrc.data[i];
     }
     r = 25;
-    //thetaE = 60;
-    px = lens_x + beta_x;
-    py = lens_y - beta_y;
-    xmin = px - r;
-    xmax = px + r;
-    ymin = py - r;
-    ymax = py + r;
-    if (xmin < 0) {
-        xmin = 0;}
-    if (xmax > w) {
-        xmax = w;}
-    if (ymin < 0) {
-        ymin = 0;}
-    if (ymax > h) {
-        ymax = h;}
-    
-    //source plane circle
-    /*for(var y=ymin; y<ymax; y++){
-        for(var x=xmin; x<xmax; x++){
-            d = Math.sqrt(Math.pow(px - x, 2) + Math.pow(py - y, 2));
-            if(d <= r){
-                index = (x + y*w)*4;
-                //for(var k=0; k<4; k++){
-                //    imageDataDst.data[index+k] = 255; //data: red, green, blue, alpha for every element
-                //}
-                imageDataDst.data[index] = imageData_gauss(d, r, 255, imageDataSrc.data[index]);
-                imageDataDst.data[index+1] = imageData_gauss(d, r, 100, imageDataSrc.data[index+1]);
-                imageDataDst.data[index+2] = imageData_gauss(d, r, 100, imageDataSrc.data[index+2]);
-                imageDataDst.data[index+3] = 255;
-            }
-        }
-    }*/
-
+    var theta;
     for(var y=0; y<h; y++){
         for(var x=0; x<w; x++){
             theta = Math.sqrt(Math.pow(x - lens_x, 2) + Math.pow(lens_y - y, 2));
-            //src_x = (x-lens_x)*(1 - Math.pow(thetaE/theta, 2)); //angular source coordinates (point mass lens)
-            //src_y = (lens_y-y)*(1 - Math.pow(thetaE/theta, 2));
-            src_x = (x-lens_x) - Math.pow(thetaE, 2)*alpha_x[x][y]; //arbitrary deflection angle from array alpha_x,y
-            src_y = (lens_y-y) - Math.pow(thetaE, 2)*alpha_y[x][y];
+            src_x = (x-lens_x) - alpha_x[x][y]; //arbitrary deflection angle from array alpha_x,y
+            src_y = (lens_y-y) - alpha_y[x][y];
             d = Math.sqrt(Math.pow(beta_x - src_x, 2) + Math.pow(beta_y - src_y, 2));
             if(d <= r){
                 index = (x + y*w)*4;
-                //for(var k=0; k<4; k++){
-                //    imageDataDst.data[index+k] = 255; //data: red, green, blue, alpha for every element
-                //}
-                imageDataDst.data[index] = imageData_gauss(d, r, 255, imageDataSrc.data[index]);
-                imageDataDst.data[index+1] = imageData_gauss(d, r, 100, imageDataSrc.data[index+1]);
-                imageDataDst.data[index+2] = imageData_gauss(d, r, 100, imageDataSrc.data[index+2]);
+                imageDataDst.data[index] += imageData_gauss(d, r/2.8, 255);
+                imageDataDst.data[index+1] += imageData_gauss(d, r/2.8, 100);
+                imageDataDst.data[index+2] += imageData_gauss(d, r/2.8, 100);
                 imageDataDst.data[index+3] = 255;
             }
         }
@@ -151,12 +119,6 @@ function drawcanvas(canvas, beta_x, beta_y, thetaE, alpha_x, alpha_y) {
     dst.putImageData(imageDataDst, 0, 0);
 }
 
-function imageData_gauss(d, r, max, offset){
-    //return offset + (max - offset) * Math.exp( -Math.pow(d/(2*r/3), 2)/2 );
-    return max*Math.exp(-3.6713 * (Math.pow(d/(r/2.8), 1/2) - 1)); //Sersic profile with n=2
+function imageData_gauss(d, r_scale, max){
+    return max*Math.exp(-3.6713 * (Math.pow(d/r_scale, 1/2) - 1)); //Sersic profile with n=2
 }
-
-var img = new Image();
-//img.crossOrigin="anonymous";
-
-img.src = "test_img.png";

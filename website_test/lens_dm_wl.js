@@ -7,18 +7,15 @@ img_alphay.src = "alphay_gaussian_random_field_1.png";
 var img_kappa = new Image();
 img_kappa.src = "kappa_gaussian_random_field_1.png";
 
-var w,h,origin_x,origin_y;
-var canvas, dst;
+var canvas = document.getElementById('wl_kappa_map');
+var dst = canvas.getContext('2d');
+
+var w = canvas.width;
+var h = canvas.height;
+var origin_x=Math.round(w/2);
+var origin_y=Math.round(h/2);
 
 window.onload = function() {
-    canvas = document.getElementById('wl_kappa_map');
-    dst = canvas.getContext('2d');
-
-    w = canvas.width;
-    h = canvas.height;
-    origin_x=Math.round(w/2);
-    origin_y=Math.round(h/2);
-
     dst.drawImage(img_alphax, 0, 0);
     imageDataAlphax = dst.getImageData(0,0,w,h);
     dst.drawImage(img_alphay, 0, 0);
@@ -61,9 +58,6 @@ window.onload = function() {
     beta_y = 0;
     
     drawcanvas(beta_x, beta_y, alpha_x, alpha_y);
-    document.addEventListener('input', function(){
-        drawcanvas(beta_x, beta_y, alpha_x, alpha_y);
-    })
 
     var scrollX = 0;
     var scrollY = 0;
