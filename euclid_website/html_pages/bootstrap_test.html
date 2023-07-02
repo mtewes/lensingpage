@@ -217,6 +217,9 @@
                 <tbody>
                   <tr>
                     <td scope="row" style="background-color: #cce5ff">
+                      <p>
+                      <a class="btn btn-dark" id="toggle_dm_wl" role="button">Ein-/Ausblenden der dunklen Materie Verteilung</a>
+                      </p>
                       <canvas id="wl_kappa_map" width="700" height="700"></canvas>
                     </td>
                     <td scope="row" style="background-color: #cce5ff">
@@ -237,61 +240,20 @@
                 </tbody>
               </table>
 
-              <h2>Es gibt Struktur im Universum</h2>
-              <p>
-                Solche gelinsten Bilder ferner Galaxien lassen sich nicht nur in kleinen, bestimmten Bereichen des Himmels beobachten, sondern sind
-                überall zu finden. Über die Zeit nach dem Urknall hat im Universum durch die Gravitation der dunklen Materie Strukturbildung stattgefunden.
-                Aus einer anfänglich eher diffusen Verteilung der Materie entstehen mit der Zeit immer "klarer definierte" Strukturen, die auf genügend
-                großen Längenskalen betrachtet wie ein kosmisches Netz aussehen. Die dunkle Materie ist dabei maßgebend für die Bildung von Struktur im Universum,
-                da sie die dominante Materiekomponente darstellt - es gibt etwa fünfmal so viel dunkle wie baryonische Materie.
-                <br>
-                Die Entwicklung der Strukturbildung im Universum soll im Folgenden anhand einer simulierten Entwicklung veranschaulicht werden.
-              </p>
-
-              <table class="table" style="border-collapse: collapse; width: 110%; border-radius: 6px; overflow: hidden;">
-                <tbody>
-                  <tr>
-                    <td scope="row" style="background-color: #cce5ff">
-                      <label for="einst_rad">Alter des Universums:</label>
-                      <input type="range" id="universe_age" min="0" max="10000" value="0" class="slider" style="width: 40%;">
-                      <output id="universe_age_out"></output>
-                      <canvas id="structure_map" width="700" height="700"></canvas>
-                    </td>
-                    <td scope="row" style="background-color: #cce5ff">
-                      <h3>Strukturbildung</h3>
-                      Hier wird gezeigt, wie die großräumige Struktur im Universum aussehen kann - genauer ist die Verteilung von Galaxien dargestellt.
-                      In blau sind zentrale Galaxien dargestellt, die der Dichteverteilung der dunklen Materie folgen, und in rot sind Zwerggalaxien zu erkennen, die in den Regionen sehr großer
-                      Materiedichte vorkommen und sich auf einem Orbit um eine zentrale blaue Galaxie befinden.
-                      <br>
-                      Mit dem Button lässt sich die Entwicklung der Struktur mit dem Alter des Universums verfolgen. Im Laufe der Zeit ist eine klare Strukturbildung
-                      zu erkennen, in deren Prozess sich im kosmischen Netz immer feinere Filamente von dunkler Materie und Galaxien bilden.
-                      <a href="https://sci.esa.int/web/euclid/-/59348-euclid-flagship-mock-galaxy-catalogue" class="btn btn-secondary btn-sm">Copyright: J. Carretero (PIC), P. Tallada (PIC), S. Serrano (ICE) and the Euclid Consortium Cosmological Simulations SWG</a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <p>
-                Die schwach verzerrte Form einer Galaxie wird durch die Struktur auf der Sichtlinie zur Erde beeinflusst.
-                Daher kann die Struktur der Materie im Universum im Prinzip durch die Beobachtung des Gravitationslinseneffekts ferner Galaxien rekonstruiert werden.
-                Euclid wird den schwachen Gravitationslinseneffekt bei vielen Millarden Galaxien beobachten, denn nur so lassen sich
-                systematische Analaysen durchführen, um auf die Verteilung der dunklen Materie im Universum zu schließen. Diese
-                Beobachtungen werden über einen Missionszeitraum von etwa 6 Jahren geführt und sollen etwas mehr als ein Drittel des Himmels abdecken.
-              </p>
               <h2>Wie kartiert man die dunkle Materie?</h2>
               <p>
                 Im Folgenden soll veranschaulicht werden, wie die Beobachtung der Formen vieler gelinster Galaxien der Massenverteilung der dunklen Materie folgt
                 und es daher durch den Gravitationslinseneffekt möglich ist, die dunkle Materie systematisch zu kartieren. 
               </p>
               
-              <table class="table" style="border-collapse: collapse; width: 110%; border-radius: 6px; overflow: hidden;">
+              <table class="table" style="border-collapse: collapse; width: 112%; border-radius: 6px; overflow: hidden;">
                 <tbody>
                   <tr>
                     <td scope="row" style="background-color: #cce5ff">
                       <p>
-                        <label for="alpha_scale">Skalierung der Linsenstärke:</label>
-                        <input type="range" id="alpha_scale" min="1" max="40" value="20" class="slider">
-                        <output id="alpha_scale_out"></output>
+                        <label for="gal_num">Zahl der Galaxien:</label>
+                        <input type="range" id="gal_num" min="1" max="40" value="5" class="slider">
+                        <output id="gal_num_out"></output>
                         <br>
                         <a class="btn btn-dark" id="toggle_dm_gal_grid" role="button">Ein-/Ausblenden der dunklen Materie Verteilung</a>
                       </p>
@@ -300,12 +262,16 @@
                     <td scope="row" style="background-color: #cce5ff">
                       <h3>Massenverteilung der dunklen Materie</h3>
                         <p>
-                          Hier ist der Gravitationslinseneffekt durch die zufällig generierte Verteilung der dunklen Materie
-                          systematisch veranschaulicht, indem die roten Galaxien im Hintergrund regelmäßig auf einem Gitter verteilt sind.
-                          Die Form des Gitters und damit auch die Galaxien werden durch die Masse der dunklen Materie verzerrt und die
-                          Vielzahl der Galaxien lässt auf die Verteilung der dunklen Materie schließen.
+                          Hier soll der Gravitationslinseneffekt durch eine zufällig generierte Verteilung der dunklen Materie
+                          mit ebenfalls zufällig verteilten Hintergrundgalaxien veranschaulicht werden.
+                          Die hier ursprünglich kreisrund geformten Galaxien werden durch die Masse der dunklen Materie verzerrt.
+                          Die beobachteten Formen der Galaxien entsprechen Ellipsen, deren Achsenverhältnis und Orientierung der Verteilung
+                          der dunklen Materie folgt. In Regionen hoher Materiedichte werden die Galaxien relativ zur Überdichte tangential verzerrt
+                          und an Stellen geringer Dichte radial.
                           <br>
-                          In Regionen hoher Materiedichte werden die Galaxien relativ zur Überdichte tangential verzerrt und an Stellen geringer Dichte radial. 
+                          Mit der Beobachtung einzelner Galaxien lässt sich noch kein Rückschluss auf die Verteilung der dunklen Materie ziehen -
+                          das wird erst mit der Beobachtung vieler Galaxien möglich, da ihre Formen wegen des Gravitationslinseneffekts durch die 
+                          dunkle Materie miteinander korreliert sind.
                         </p>
                     </td>
                   </tr>
@@ -323,6 +289,50 @@
                 Die Kombination aus einem sehr großen Datensatz (also der Beobachtung möglichst vieler Galaxien) und einer sehr exakten
                 Messung der Form einzelner Galaxien, ermöglicht eine genaue Kartierung der Verteilung der dunklen Materie.
               </p>
+
+              <h2>Es gibt Struktur im Universum</h2>
+              <p>
+                Über die Zeit nach dem Urknall hat im Universum durch die Gravitation der dunklen Materie Strukturbildung stattgefunden.
+                Aus einer anfänglich eher diffusen Verteilung der Materie entstehen mit der Zeit immer "klarer definierte" Strukturen, die auf genügend
+                großen Längenskalen betrachtet wie ein kosmisches Netz aussehen. Die dunkle Materie ist dabei maßgebend für die Bildung von Struktur im Universum,
+                da sie die dominante Materiekomponente darstellt - es gibt etwa fünfmal so viel dunkle wie baryonische Materie.
+                <br>
+                Die Entwicklung der Strukturbildung im Universum soll im Folgenden anhand einer simulierten Entwicklung veranschaulicht werden.
+              </p>
+
+      </div>
+              <table class="table" style="margin:auto; border-collapse: collapse; width: 90%; border-radius: 6px; overflow: hidden;">
+                <tbody>
+                  <tr>
+                    <td scope="row" style="background-color: #cce5ff">
+                      <canvas id="structure_map" width="1500" height="700" ></canvas>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td scope="row" style="background-color: #cce5ff">
+                      <h3>Strukturbildung</h3>
+                      Hier wird gezeigt, wie die großräumige Struktur im Universum aussehen kann - genauer ist die Verteilung von Galaxien dargestellt.
+                      In blau sind zentrale Galaxien dargestellt, die der Dichteverteilung der dunklen Materie folgen, und in rot sind Zwerggalaxien zu erkennen, die in den Regionen sehr großer
+                      Materiedichte vorkommen und sich auf einem Orbit um eine zentrale blaue Galaxie befinden.
+                      <br>
+                      Mit dem Button lässt sich die Entwicklung der Struktur mit dem Alter des Universums verfolgen. Im Laufe der Zeit ist eine klare Strukturbildung
+                      zu erkennen, in deren Prozess sich im kosmischen Netz immer feinere Filamente von dunkler Materie und Galaxien bilden.
+                      <a href="https://sci.esa.int/web/euclid/-/59348-euclid-flagship-mock-galaxy-catalogue" class="btn btn-secondary btn-sm">Copyright: J. Carretero (PIC), P. Tallada (PIC), S. Serrano (ICE) and the Euclid Consortium Cosmological Simulations SWG</a>
+                      <a href="https://www.esa.int/ESA_Multimedia/Images/2023/02/Euclid_key_visual" class="btn btn-secondary btn-sm">Copyright: ESA/Euclid/Euclid Consortium/NASA. Background galaxies: NASA, ESA, and S. Beckwith (STScI) and the HUDF Team</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+        <div class="center">
+              <p>
+                Die schwach verzerrte Form einer Galaxie wird durch die Struktur auf der Sichtlinie zur Erde beeinflusst.
+                Daher kann die Struktur der Materie im Universum im Prinzip durch die Beobachtung des Gravitationslinseneffekts ferner Galaxien rekonstruiert werden.
+                Euclid wird den schwachen Gravitationslinseneffekt bei vielen Millarden Galaxien beobachten, denn nur so lassen sich
+                systematische Analaysen durchführen, um auf die Verteilung der dunklen Materie im Universum zu schließen. Diese
+                Beobachtungen werden über einen Missionszeitraum von etwa 6 Jahren geführt und sollen etwas mehr als ein Drittel des Himmels abdecken.
+              </p>
+              
               
     
     <div class="footer">test</div>
