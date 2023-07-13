@@ -17,6 +17,10 @@ for(var i=0; i<w; i++){
     alpha_y1[i] = new Array(h);
     detA[i] = new Array(h);
 }
+var img_alphax_ell_lens = new Image();
+img_alphax_ell_lens.src = "../images/scrollpage/alphax_ell_lens.png";
+var img_alphay_ell_lens = new Image();
+img_alphay_ell_lens.src = "../images/scrollpage/alphay_ell_lens.png";
 
 //second canvas
 var imageDataDst2, imageDataSrc2, imageDataAlphax, imageDataAlphay;
@@ -80,15 +84,33 @@ img_euclid.src = "../images/scrollpage/Euclid_telescope.png";
 
 window.onload = function() {
     //first
+    dst1.drawImage(img_alphax_ell_lens, 0, 0);
+    imageDataAlphax = dst1.getImageData(0,0,w,h);
+    dst1.drawImage(img_alphay_ell_lens, 0, 0);
+    imageDataAlphay = dst1.getImageData(0,0,w,h);
     dst1.fillStyle = 'black';
     dst1.fillRect(0,0,w,h);
     imageDataSrc1 = dst1.getImageData(0, 0, w, h);
     imageDataDst1 = dst1.getImageData(0, 0, w, h);
 
+    /*for(var x=0; x<w; x++){
+        for(var y=0; y<h; y++){
+            index = (x+y*w)*4;
+            alpha_x1[x][y] = imageDataAlphax.data[index] - imageDataAlphax.data[index+2]; //red are the positive, blue the negative angles
+            alpha_y1[x][y] = -imageDataAlphay.data[index] + imageDataAlphay.data[index+2]; //canvas y-coord is inverted
+        }
+    }
+    for(var x=0; x<w; x++){
+        for(var y=0; y<h; y++){
+            alpha_x1[x][y] *= 500/255;
+            alpha_y1[x][y] *= 500/255;
+        }
+    }*/
+    
     var or=30*Math.PI/180; //orientation in rad
     var q=0.7; //axis ratio
     var a=100; //major semi-axis
-    var thetaE=a*1.;
+    var thetaE=a*1.2;
     var thetaC=thetaE*0.1;
     drawlens1(or, q, a, thetaE, thetaC);
 
@@ -110,14 +132,22 @@ window.onload = function() {
         scrollX = e.deltaX;
         scrollY = e.deltaY;
     })
-    document.addEventListener("mousemove", (e) => {
+    canvas1.addEventListener("mousemove", (e) => {
         var bounds = canvas1.getBoundingClientRect();
         curX = e.clientX - bounds.left - scrollX - (bounds.right - bounds.left)/2;
         curY = -(e.clientY - bounds.top - scrollY - (bounds.bottom - bounds.top)/2);
         //if(pressed1==true){drawcanvas1(curX, curY, alpha_x1, alpha_y1);}
-        if(Math.abs(curX)<=w && Math.abs(curY)<=h){
-            drawcanvas1(curX, curY, alpha_x1, alpha_y1);
-        }
+        drawcanvas1(curX, curY, alpha_x1, alpha_y1);
+    });
+    canvas1.addEventListener("touchmove", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        var touch = e.touches[0];
+        var mouseEvent = new MouseEvent("mousemove", {
+            clientX: touch.clientX,
+            clientY: touch.clientY
+        });
+        canvas1.dispatchEvent(mouseEvent);
     });
 
     //second
@@ -291,6 +321,7 @@ window.onload = function() {
 function drawlens1(or, q, a, thetaE, thetaC){
     var rho;
     eps = (1-q)/(1+q);
+    e = Math.sqrt(1-Math.pow(q,2));
     for(var x=0; x<w; x+=0.5){
         for(var y=0; y<h; y+=0.5){
             x_rot = (x-origin_x)*Math.cos(or) + (origin_y-y)*Math.sin(or);
@@ -306,8 +337,15 @@ function drawlens1(or, q, a, thetaE, thetaC){
                 var Y = Math.sqrt(Math.pow(rho,2)+Math.pow(thetaC,2));
                 a_x = (1-Math.pow(eps,2))*thetaE/(2*Math.sqrt(eps))*Math.atan(2*Math.sqrt(eps)*x_rot/((1-Math.pow(eps,2))*Y + Math.pow(1-eps,2)*thetaC));
                 a_y = (1-Math.pow(eps,2))*thetaE/(2*Math.sqrt(eps))*Math.atanh(2*Math.sqrt(eps)*y_rot/((1-Math.pow(eps,2))*Y + Math.pow(1-eps,2)*thetaC));
-                alpha_x1[Math.round(x)][Math.round(y)] = a_x/q*Math.cos(or) - a_y*q*Math.sin(or);
-                alpha_y1[Math.round(x)][Math.round(y)] = a_x/q*Math.sin(or) + a_y*q*Math.cos(or);
+                alpha_x1[Math.round(x)][Math.round(y)] = a_x*Math.cos(or) - a_y*Math.sin(or);
+                alpha_y1[Math.round(x)][Math.round(y)] = a_x*Math.sin(or) + a_y*Math.cos(or);
+                alpha_x1[Math.round(x)][Math.round(y)] *= Math.exp(-Math.pow(rho,2)/(2*Math.pow(0.28*canvas1.width,2))); //make sure, deflection drops to almost 0 towards canvas border
+                alpha_y1[Math.round(x)][Math.round(y)] *= Math.exp(-Math.pow(rho,2)/(2*Math.pow(0.28*canvas1.width,2)));
+                /*var psi = Math.sqrt(Math.pow(q,2)*(Math.pow(thetaC,2) + Math.pow(x_rot,2)) + Math.pow(y_rot,2));
+                a_x = q*thetaE/e * Math.atan(e*x_rot/(psi + thetaC));
+                a_y = q*thetaE/e * Math.atanh(e*y_rot/(psi + Math.pow(q,2)*thetaC));
+                alpha_x1[Math.round(x)][Math.round(y)] = a_x*Math.cos(or) - a_y*Math.sin(or);
+                alpha_y1[Math.round(x)][Math.round(y)] = a_x*Math.sin(or) + a_y*Math.cos(or);*/
                 /*detA[Math.round(x)][Math.round(y)] = 1 - thetaE/Y + (1-Math.pow(eps,2))*thetaC*Math.pow(thetaE,2) / (Y*(2*(1+Math.pow(eps,2))*Math.pow(thetaC,2) + Math.pow(x_rot,2) + Math.pow(y_rot,2) + 2*(1-Math.pow(eps,2))*Y*thetaC));
                 if(Math.abs(detA[Math.round(x)][Math.round(y)])<0.01){ //draw critical curve
                     imageDataSrc1.data[index+1] = 255;
