@@ -87,7 +87,7 @@ var imageDataStr, imageDataStrhelp;
 var img_structure = new Image();
 img_structure.src = "../images/scrollpage/Euclid_flagship_mock_galaxy_catalogue_cropped.png";
 var img_euclid = new Image();
-img_euclid.src = "../images/scrollpage/Euclid_telescope.jpg";
+img_euclid.src = "../images/scrollpage/Euclid_telescope.png";
 
 //-----------------------------------------------------------------------------//
 //Now load all canvases
@@ -275,6 +275,17 @@ window.onload = function() {
     
     //draw flagship image stripe
     structure_map.drawImage(img_structure, 0, 0, img_structure.width, img_structure.height, euclid_offset, 0, canvas_Str.width-euclid_offset, h_stripe);
+    //draw arrow for timeline
+    drawArrow(structure_map, euclid_offset, h_stripe+12, canvas_Str.width-8, h_stripe+12, 8, 'black');
+    //timeline description
+    structure_map.font = "bold 20px Bahnschrift";
+    structure_map.textAlign = "left";
+    structure_map.fillText("Heutiges Universum", euclid_offset, h_stripe+36);
+    structure_map.textAlign = "center";
+    structure_map.fillText("Euclid blickt in die Vergangenheit", euclid_offset+(canvas_Str.width-euclid_offset)/2-100, h_stripe+36);
+    structure_map.textAlign = "right";
+    structure_map.fillText("Universum vor 11 Milliarden Jahren", canvas_Str.width, h_stripe+36);
+    
     imageDataStr = structure_map.getImageData(0,0,canvas_Str.width,canvas_Str.height);
     imageDataStrhelp = structure_map.getImageData(0,0,canvas_Str.width,canvas_Str.height);
     //make flagship stripe transparent
@@ -475,6 +486,41 @@ function drawcursor(curXs, h_stripe, curXsold, w_clip_stripe){
     }
     //load imageData into canvas
     structure_map.putImageData(imageDataStr, 0, 0);
+}
+
+function drawArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color){
+    //taken from https://codepen.io/chanthy/pen/WxQoVG
+    //variables to be used when creating the arrow
+    var headlen = 10;
+    var angle = Math.atan2(toy-fromy,tox-fromx);
+ 
+    ctx.save();
+    ctx.strokeStyle = color;
+ 
+    //starting path of the arrow from the start square to the end square
+    //and drawing the stroke
+    ctx.beginPath();
+    ctx.moveTo(fromx, fromy);
+    ctx.lineTo(tox, toy);
+    ctx.lineWidth = arrowWidth;
+    ctx.stroke();
+ 
+    //starting a new path from the head of the arrow to one of the sides of the point
+    ctx.beginPath();
+    ctx.moveTo(tox, toy);
+    ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7), toy-headlen*Math.sin(angle-Math.PI/7));
+ 
+    //path from the side point of the arrow, to the other side point
+    ctx.lineTo(tox-headlen*Math.cos(angle+Math.PI/7), toy-headlen*Math.sin(angle+Math.PI/7));
+ 
+    //path from the side point back to the tip of the arrow, and then
+    //again to the opposite side point
+    ctx.lineTo(tox, toy);
+    ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/7), toy-headlen*Math.sin(angle-Math.PI/7));
+ 
+    //draws the paths created above
+    ctx.stroke();
+    ctx.restore();
 }
 
 //Give brightness of galaxy pixel according to its distance d from the galaxy center,
