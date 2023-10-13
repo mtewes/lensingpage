@@ -267,7 +267,7 @@ window.onload = function() {
     let euclid_offset = 0.4*h_stripe*img_euclid.height/img_euclid.width; //offset off x-coord. due to the small eculid image
     //draw the small euclid image, centered in h_stripe
     structure_map.drawImage(img_euclid, 0, 0, img_euclid.width, img_euclid.height, 0, (h_stripe-euclid_offset*img_euclid.height/img_euclid.width)/2, euclid_offset, euclid_offset*img_euclid.height/img_euclid.width)
-    
+
     let w_image = Math.round(canvas_Str.width/2); //width of flagship clipping on canvas
     let h_image = canvas_Str.height - (h_stripe+50); //height of flagship clipping on canvas
     let w_clip = h_image*(canvas_Str.width-euclid_offset)/h_stripe; //width of flagship clipping in original flagship image

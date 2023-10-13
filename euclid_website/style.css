@@ -84,6 +84,7 @@
     width: 100%; 
     margin: auto; 
     background-color: #353541;
+    background-image: url("./images/scrollpage/GOODS-S_field_NIRCam_image-min.jpg");
     color: #ffffff;
     font-family: Bahnschrift Light;
     font-size: large;
@@ -106,6 +107,16 @@
     padding-top: 1%;
     padding-left: 2%;
     padding-right: 2%;
+    background-color: #353541;
+  }
+
+  .canvas_env{
+    margin: auto;
+    width: 65%;
+    padding-top: 0.5%;
+    padding-bottom: 0.5%;
+    padding-left: 0.5%;
+    padding-right: 0.5%;
     background-color: #353541;
   }
 

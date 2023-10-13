@@ -20,10 +20,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="../html_pages/index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="../html_pages/intro.html">Die Euclid Mission</a>
+                  <a class="nav-link active" aria-current="page" href="../html_pages/index.html">Die Euclid Mission</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="../html_pages/dark_matter.html">Dunkle Materie</a>
@@ -39,19 +36,25 @@
             </div>
           </div>
         </nav>
-  </nav>
+    </nav>
 
     <div class="center">
         <h1>Die Euclid Mission</h1>
 
         <p>
-          Beim Blick in das Universum sehen wir, dass die Bilder weit entfernter Galaxien oft nicht so geformt sind,
+          Beim Blick in das Universum können wir weit entfernte Galaxien beobachten, deren Licht auf dem Weg zur Erde durch den intergalaktischen Raum nicht unbeeinflusst geblieben ist.
+          Dies kann durch Ansammlungen von Masse, wie z.B. einer weiteren Galaxie, auf der Sichtlinie zu einer Hintergrundgalaxie zustandekommen und wird Gravitationslinseneffekt genannt.
+          Dieser hat zur Folge, dass wir das Bild einer entfernten Galaxie an einer abgelenkten Position und mit verzerrter Form beobachten.
+          Die Beobachtung des Gravitationslinseneffekts stellt eine der fundamentalen Methoden des Euclid-Teleskops dar, um das Universum und die in ihm vorhandene Materie zu erforschen.
+          <!--Beim Blick in das Universum sehen wir, dass die Bilder weit entfernter Galaxien oft nicht so geformt sind,
           wie man es aus dem lokalen Universum von Galaxien wie Andromeda gewohnt ist. Diese Veränderung der Form
           einer Galaxie ist auf den Gravitationslinseneffekt zurückzuführen, der außerdem auch die scheinbare Position des Bildes, sowie
-          dessen Größe und Helligkeit beeinflusst.
+          dessen Größe und Helligkeit beeinflusst.-->
         </p>
-
-        <table class="table" style="border-collapse: collapse; width: 100%; border-radius: 6px; overflow: hidden;">
+    </div>
+    
+    <div class="canvas_env">
+        <table class="table" style="margin:auto; border-collapse: collapse; width: 100%; border-radius: 6px; overflow: hidden;">
           <tbody>
             <tr>
               <td scope="row" style="background-color: #cce5ff">
@@ -61,19 +64,19 @@
                   <h3>Starker Gravitationslinseneffekt</h3>
                   <p>
                     Wie sich der Gravitationslinseneffekt auf das Bild einer Galaxie auswirken kann, soll hier veranschaulicht werden.
-                    Klicke dazu einfach doppelt in die Bildfläche und bewege die Maus. Die Position der Maus ist dabei die ursprüngliche Position
-                    der (eigentlich kreisrunden) Galaxie ohne den Effekt der Gravitationslinse im Vordergrund.
-                    <br>
-                    Die Masse der Gravitationslinse im Vordergrund (hier eine andere Galaxie) sorgt für den starken Gravitationslinseneffekt, durch den
-                    die starke Ablenkung des Lichts der roten Galaxie zustande kommt. Die rote Galaxie wird in ihrer Form stark verzerrt und in der Nähe
-                    der Gravitationslinse mehrfach abgebildet.
-                    <br>
+                    Bewege dazu einfach die Maus, dessen Position die eigentliche Position der roten, kreisrunden Galaxie darstellt, in der linken Bildfläche.
+                    Die Masse der größeren Galaxie im Vordergrund wirkt nun als Gravitationslinse und beeinflusst das Bild der roten Galaxie.
+                    Die Form und Position der roten Galaxie wird in der Nähe der Gravitationslinse stark verändert und es lassen sich sogar mehrere Bilder der roten Galaxie beobachten.
+                    Bei einer solchen Konfiguration von Hintergrundgalaxie und Gravitationslinse ist vom starken Gravitationslinseneffekt die Rede.
                   </p>
               </td>
             </tr>
           </tbody>
         </table>
-        Für etwas detailliertere Informationen über den Gravitationslinseneffekt, kannst du auf den folgenden Button klicken.
+        </div>
+        <div class="center">
+        
+        Für etwas detailliertere Informationen über den Gravitationslinseneffekt, kannst Du hier auf den folgenden Button klicken.
         <div class="d-grid gap-2 col-8 mx-auto">
           <a class="btn btn-success" href="../html_pages/lensing_intro.html" role="button">Hier erfährst du mehr über den Gravitationslinseneffekt</a>
         </div>
@@ -84,7 +87,7 @@
           herum gelinst wird. Solche und viele weitere Gravitationslinsensysteme lassen sich im ganzen Universum beobachten.
           <br>
           Beispielsweise kann die Masse eines ganzen Galaxienhaufens wie eine riesige Linse im Kosmos wirken.
-          Das Licht, das von dahinterliegenden Galaxien durch oder nahe am Galaxienhaufen vorbei läuft, wird durch dessen Masse abgelenkt - so ähnlich wie es mit dem Glas einer optischen Linse der Fall ist.
+          Das Licht, das von dahinterliegenden Galaxien durch oder nahe am Galaxienhaufen vorbei läuft, wird wegen dessen Masse abgelenkt und erlaubt es uns nur die verzerrten Formen und abgelenkten Positionen der Hintergrundgalaxien zu beobachten.
           <br>
           Im Folgenden werden einige verschiedene Gravitationslinsensysteme vorgestellt.
         </p>
@@ -134,17 +137,20 @@
                     </a>
                     <div class="collapse" id="jwst_collapse">
                         <div class="card card-body" style="background-color: #78788f">
-                          <ol>
+                          <ol style="font-weight: bold">
                             <li>
                             Im ersten Bild sind tausende Galaxien in verschiedenen Entfernungen zu sehen. Im Vordergrund des Bildes befinden sich die weißen Galaxien, wie die große elliptische Galaxie im Zentrum.
                             Um diese herum sind andere, kleinere weiße Galaxien verteilt, die zusammen einen Galaxienhaufen bilden.
                             Daneben sind allerdings auch viele deutlich rötere Galaxien abgebildet, die sich von uns aus betrachtet hinter dem Galaxienhaufen befinden. Die Formen dieser Galaxien weichen in der Regel
-                            allerdings stark von denen der weißen Galaxien im Galaxienhaufen ab - es sind zahlreiche stark verzerrte Bögen zu erkennen, die alles andere als eine natürliche Form einer Galaxie darstellen.
+                            allerdings stark von denen der weißen Galaxien im Galaxienhaufen ab - es sind zahlreiche stark verzerrte Bögen zu erkennen, die alles andere als eine natürliche Form einer Galaxie darstellen
+                            und sich nur durch die Wirkung des Gravitationslinseneffekts erklären lassen.
                             </li>
+                            <br>
                             <li>
-                            Im zweiten Bild wird das Licht einer Hintergrundgalaxie von der Gravitation des im Vordergrund liegenden Galaxienhaufens abgelenkt, dass das resultierende
-                            Bild der Galaxie stark vergrößert und verzerrt wird, sodass es eine Ringform annimmt - bei diesem Phänomen sprechen wir von einem Einstein Ring.
+                            Im zweiten Bild wird das Licht einer Hintergrundgalaxie von der Gravitation des im Vordergrund liegenden Galaxienhaufens abgelenkt. Das resultierende
+                            Bild der Galaxie erscheint so stark vergrößert und verzerrt, dass es eine Ringform annimmt - bei diesem Phänomen sprechen wir von einem Einstein Ring.
                             </li>
+                            <br>
                             <li>
                             Das dritte Bild zeigt ein Beispiel der mehrfachen Abbildung ein und desselben Objekts (hier ein Quasar) durch den Gravitationslinseneffekt.
                             Im Vordergrund befinden sich zwei Galaxien, deren Masse das Licht des dahinterliegenden Quasars so ablenkt, dass dieser fünffach abgebildet wird.
@@ -163,16 +169,29 @@
               Mit der Beobachtung des Gravitationslinseneffekts lässt sich etwas über die den Effekt verursachende Massenverteilung sagen.
               Die oben gezeigten Beispiele von Gravitationslinsensystemen geben daher Informationen über die lokale Massenverteilung in dem
               entsprechenden Bereich des Himmels.
-              <br>
               Beobachtet man nun eine große Zahl an gelinsten Galaxien in einem sehr großen Ausschnitt des Himmels, kann man also etwas über 
-              die Verteilung der Materie im Universum herausfinden.
+              die Verteilung der Materie im ganzen Universum herausfinden.
             </p>
             
           <div class="alert alert-primary" role="alert">
-            Die Euclid Mission wird sich den Gravitationslinseneffekt bei der Beobachtung von Millarden an Galaxien zu Nutze machen, um mehr über die Verteilung der dunklen Materie im Universum herauszufinden.
+            Die Euclid Mission wird sich den Gravitationslinseneffekt bei der Beobachtung von Millarden an Galaxien in einem Drittel des gesamten Himmels zu Nutze machen, um mehr über die Verteilung der dunklen Materie im Universum herauszufinden.
           </div>
 
-          <div class="accordion" id="acc_dm">
+          <br>
+          <h2>Was ist dunkle Materie?</h2>
+          <p>
+            Seit vielen Jahrzehnten gibt es in astronomischen Beobachtungen starke Indizien dafür, dass neben der "normalen", baryonischen Materie
+            noch eine weitere Form von Materie, die sogenannte dunkle Materie, im Universum vorhanden ist.
+            Die Schwierigkeit für einen direkten Nachweis von dunkler Materie liegt darin, dass diese, anders als die baryonische Materie, 
+            nicht mit Licht wechselwirkt und es noch nicht klar ist, wie sich die dunkle Materie in Theorien der Teilchenphysik manifestiert.
+            Wir können ihre Existenz im Universum bisher deshalb nur durch ihre gravitative Wirkung nachweisen.
+            <br>
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <a class="btn btn-success" href="../html_pages/dark_matter.html" role="button">Hier erfährst du mehr über die dunkle Materie</a>
+            </div>
+          </p>
+
+          <!--<div class="accordion" id="acc_dm">
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_dm" aria-expanded="false" aria-controls="collapse_dm" style="background-color: #212529;">
@@ -194,7 +213,8 @@
                 </div>
               </div>
             </div>
-            </div>
+            </div>-->
+
             <br>
             <h2>Der Einfluss der dunklen Materie</h2>
             <p>
@@ -205,7 +225,9 @@
                 Wie sich die Verteilung von dunkler Materie durch den Gravitationslinseneffekt auf das Licht entfernter Galaxien auswirkt, ist im Folgenden vereinfacht dargestellt.
             </p>
 
-            <table class="table" style="border-collapse: collapse; width: 100%; border-radius: 6px; overflow: hidden;">
+            </div>
+            <div class="canvas_env">
+            <table class="table" style="margin:auto; border-collapse: collapse; width: 100%; border-radius: 6px; overflow: hidden;">
                 <tbody>
                   <tr>
                     <td scope="row" style="background-color: #cce5ff">
@@ -218,27 +240,32 @@
                         <h3>Schwacher Gravitationslinseneffekt</h3>
                         <p>
                         Eigentlich ist die rote Galaxie kreisrund, jedoch sorgt die Masse auf und um die Sichtlinie zur Galaxie dafür, dass wir
-                        ein verschobenes und verzerrtes Bild beobachten.
-                        Die Veränderungen von Position, Form und Größe des Bildes der Galaxie sind so klein, dass wir vom schwachen Gravitationslinseneffekts reden, den Euclid für viele Galaxien beobachtet. 
+                        ein schwach verschobenes und verzerrtes Bild beobachten.
+                        Die Veränderungen von Position, Form und Größe des Bildes der Galaxie sind so klein, dass wir vom schwachen Gravitationslinseneffekts reden, den Euclid anhand der Bilder vieler Galaxien beobachtet. 
                         <br>
                         Die Verteilung der dunklen Materie ist hier zufällig generiert -
-                        die Dichte schwankt um einen Mittelwert herum, sodass es Stellen größerer und kleinerer Materiedichte gibt.
-                        Dort wo sich viel Masse auf der Sichtlinie befindet, wird ein stärker abgelenktes, verzerrtes und vergrößertes
-                        Bild der Galaxie beobachtet.
+                        die Materiedichte auf der Sichtlinie bestimmt die Stärke des Gravitationslinseneffekts und variiert mit der Position der Galaxie.
+                        An Stellen großer Materiedichte wird ein abgelenktes, verzerrtes und vergrößertes
+                        Bild der Galaxie beobachtet und bei geringer Materiedichte ist das Bild der Galaxie nur sehr schwach beeinflusst.
                         <br>
                         </p>
                     </td>
                   </tr>
                 </tbody>
               </table>
-
+            </div>
+            
+            <div class="center">
+              <br>
               <h2>Wie kartiert man die dunkle Materie?</h2>
               <p>
                 Im Folgenden soll veranschaulicht werden, wie die Beobachtung der Formen vieler gelinster Galaxien der Massenverteilung der dunklen Materie folgt
                 und es daher durch den Gravitationslinseneffekt möglich ist, die dunkle Materie systematisch zu kartieren. 
               </p>
-              
-              <table class="table" style="border-collapse: collapse; width: 112%; border-radius: 6px; overflow: hidden;">
+            </div>
+
+            <div class="canvas_env">
+              <table class="table" style="margin:auto; border-collapse: collapse; width: 100%; border-radius: 6px; overflow: hidden;">
                 <tbody>
                   <tr>
                     <td scope="row" style="background-color: #cce5ff">
@@ -258,8 +285,7 @@
                           mit ebenfalls zufällig verteilten Hintergrundgalaxien veranschaulicht werden.
                           Die hier ursprünglich kreisrund geformten Galaxien werden durch die Masse der dunklen Materie verzerrt.
                           Die beobachteten Formen der Galaxien entsprechen Ellipsen, deren Achsenverhältnis und Orientierung der Verteilung
-                          der dunklen Materie folgt. In Regionen hoher Materiedichte werden die Galaxien relativ zur Überdichte tangential verzerrt
-                          und an Stellen geringer Dichte radial.
+                          der dunklen Materie folgt. In Regionen besonders hoher Materiedichte ist auch ein stärkerer Gravitationslinseneffekt zu beobachten.
                           <br>
                           Mit der Beobachtung einzelner Galaxien lässt sich noch kein Rückschluss auf die Verteilung der dunklen Materie ziehen -
                           das wird erst mit der Beobachtung vieler Galaxien möglich, da ihre Formen wegen des Gravitationslinseneffekts durch die 
@@ -269,17 +295,24 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
 
+            <div class="center">
               <p>
                 Die Formen der beobachteten Galaxien geben also Aufschluss über die dunkle Materie im Universum, weshalb deren
-                Messung eine der primären Aufgaben von Euclid ist. Da die ursprüngliche Form einer Galaxie wegen des Gravitationslinseneffekts
-                nicht zu beobachten ist, müssen die beobachteten Formen möglichst vieler Galaxien gemittelt werden. Vergrößert man die
-                Datensätze der Beobachtungen immer weiter, spielen die ursprünglichen Formen der Galaxien eine immer geringere Rolle, da diese
-                zufällig verteilt sind und es bleibt nur der Beitrag des Gravitationslinseneffekts zur Form der Galaxien übrig, der von dem
-                Einfluss der dunklen Materie im Universum stammt.
+                Messung eine der primären Aufgaben von Euclid ist. 
+                Aufgrund des Gravitationslinseneffekts ist es natürlich nicht möglich die ursprüngliche Form einer Galaxie zu beobachten.
+                Daher ist es mit der Beobachtung vereinzelter Galaxien auch nicht möglich etwas über die den Gravitationslinseneffekt verursachende Massenverteilung auszusagen -
+                erst die Beobachtung einer Vielzahl von Galaxien in einem möglichst kleinen Bereich des Himmels ermöglicht das.
+                <br>
+                Die verzerrten Formen der Galaxien können mit statistischen Methoden analysiert werden um die Massenverteilung zu rekonstruieren. 
+                Die unbekannten ursprünglichen Formen der Galaxien verursachen dabei eine statistische Unsicherheit, die mit der Anzahl an beobachteten Galaxien abnimmt.
+                Vergrößert man die Datensätze der Beobachtungen also immer weiter, kann man den Beitrag des Gravitationslinseneffekts zur beobachteten Form der Galaxien extrahieren, der von dem
+                Einfluss der dunklen Materie im Universum stammt, und so die Verteilung der dunklen Materie kartieren.
                 <br>
                 Die Kombination aus einem sehr großen Datensatz (also der Beobachtung möglichst vieler Galaxien) und einer sehr exakten
-                Messung der Form einzelner Galaxien, ermöglicht eine genaue Kartierung der Verteilung der dunklen Materie.
+                Messung der Form einzelner Galaxien, ermöglicht eine genaue Rekonstruktion der Verteilung der dunklen Materie. 
+                Diese beiden Beiträge zur Erforschung dunkler Materie werden in Euclids Beobachtungen vereint.
               </p>
 
               <h2>Es gibt Struktur im Universum</h2>
@@ -293,7 +326,9 @@
               </p>
 
       </div>
-              <table class="table" style="margin:auto; border-collapse: collapse; width: 90%; border-radius: 6px; overflow: hidden;">
+
+      <div class="canvas_env" style="width: 90%;">
+              <table class="table" style="margin:auto; border-collapse: collapse; width: 100%; border-radius: 6px; overflow: hidden;">
                 <tbody>
                   <tr>
                     <td scope="row" style="background-color: #cce5ff">
@@ -303,31 +338,39 @@
                   <tr>
                     <td scope="row" style="background-color: #cce5ff">
                       <h3>Strukturbildung</h3>
-                      Hier wird gezeigt, wie die großräumige Struktur im Universum aussehen kann - genauer ist die Verteilung von Galaxien dargestellt.
-                      In blau sind zentrale Galaxien dargestellt, die der Dichteverteilung der dunklen Materie folgen, und in rot sind Zwerggalaxien zu erkennen, die in den Regionen sehr großer
-                      Materiedichte vorkommen und sich auf einem Orbit um eine zentrale blaue Galaxie befinden.
+                      Hier wird gezeigt, wie die großräumige Struktur im Universum aussehen kann - genauer ist die Verteilung von Galaxien eingebettet in die Verteilung der dunklen Materie dargestellt.
+                      In blau werden zentrale Galaxien gezeigt, die der Dichteverteilung der dunklen Materie folgen, und in rot sind Zwerggalaxien zu erkennen, die in den Regionen sehr großer
+                      Materiedichte vorkommen und sich auf einem Orbit um eine massereichere, zentrale blaue Galaxie befinden.
                       <br>
-                      Mit dem Button lässt sich die Entwicklung der Struktur mit dem Alter des Universums verfolgen. Im Laufe der Zeit ist eine klare Strukturbildung
-                      zu erkennen, in deren Prozess sich im kosmischen Netz immer feinere Filamente von dunkler Materie und Galaxien bilden.
-                      <a href="https://sci.esa.int/web/euclid/-/59348-euclid-flagship-mock-galaxy-catalogue" class="btn btn-secondary btn-sm">Copyright: J. Carretero (PIC), P. Tallada (PIC), S. Serrano (ICE) and the Euclid Consortium Cosmological Simulations SWG</a>
+                      Mit dem Cursor in dem oberen Bild lässt sich die Entwicklung der Struktur mit dem Alter des Universums verfolgen. Dabei ist am linken Rand die Struktur im heutigen Universum dargestellt und je weiter rechts sich der Cursor befindet, desto jünger das Universum.
+                      Verfolgt man die Struktur von rechts nach links, also mit der Entwicklung des Universums, stellt sich heraus, dass im Laufe der Zeit eine Bildung von Struktur stattfindet.
+                      Ausgehend von einer anfangs diffusen und gleichmäßigeren Verteilung von Galaxien und dunkler Materie, entwickelt sich im Laufe der Zeit ein kosmisches Netz mit feineren Strukturen immer höherer Materiedichte.
+                      <br><a href="https://sci.esa.int/web/euclid/-/59348-euclid-flagship-mock-galaxy-catalogue" class="btn btn-secondary btn-sm">Copyright: J. Carretero (PIC), P. Tallada (PIC), S. Serrano (ICE) and the Euclid Consortium Cosmological Simulations SWG</a>
                       <br><a href="https://sci.esa.int/web/euclid/display-page-cl-display-page-content-long/-/asset_publisher/33230/content/59041-artist-s-impression-of-euclid" class="btn btn-secondary btn-sm">Copyright: ESA/C. Carreau</a>
                     </td>
                   </tr>
                 </tbody>
               </table>
+      </div>
 
         <div class="center">
               <p>
-                Die schwach verzerrte Form einer Galaxie wird durch die Struktur auf der Sichtlinie zur Erde beeinflusst.
+                Die beobachtete Form einer Galaxie wird durch die Masse der Strukturen auf der Sichtlinie beeinflusst.
                 Daher kann die Struktur der Materie im Universum im Prinzip durch die Beobachtung des Gravitationslinseneffekts ferner Galaxien rekonstruiert werden.
-                Euclid wird den schwachen Gravitationslinseneffekt bei vielen Millarden Galaxien beobachten, denn nur so lassen sich
-                systematische Analaysen durchführen, um auf die Verteilung der dunklen Materie im Universum zu schließen. Diese
-                Beobachtungen werden über einen Missionszeitraum von etwa 6 Jahren geführt und sollen etwas mehr als ein Drittel des Himmels abdecken.
+                Euclid wird den schwachen Gravitationslinseneffekt bei vielen Millarden Galaxien beobachten, denn nur so lassen sich Analaysen durchführen, um auf die Verteilung der dunklen Materie im Universum zu schließen.
+                Diese Beobachtungen werden über einen Missionszeitraum von etwa 6 Jahren geführt und sollen etwas mehr als ein Drittel des Himmels abdecken.
               </p>
-              
+              <p>
+                Die Beobachtung von Galaxien in unterschiedlichen Entfernungen entspricht auch einem Blick in unterschiedliche Epochen des Universums.
+                Dadurch ist es mit Euclid möglich, die Entwicklung des Universums nicht nur in Bezug auf die Bildung von Strukturen, sondern auch auf dessen Expansion hin zu untersuchen.
+                Dabei kann nicht nur die dunkle Materie, sondern auch dunkle Energie erforscht werden, welche den größten Anteil des Energieinhalts im Universum ausmacht und vor allem die Expansion des Universums beeinflusst.
+              </p>
+        </div>
               
     
-    <div class="footer">test</div>
+    <div class="footer">
+      <a href="https://www.esa.int/ESA_Multimedia/Images/2023/06/GOODS-S_field_NIRCam_image" class="btn btn-secondary btn-sm" style="font-size:x-small;">Hintergrund Copyright: NASA, ESA, CSA, Brant Robertson (UC Santa Cruz), Ben Johnson (CfA), Sandro Tacchella (Cambridge), Marcia Rieke (University of Arizona), Daniel Eisenstein (CfA)</a>
+    </div>
 
     <script type="text/javascript" src="../scripts/main_scroller_script.js"></script>
     <!--<script type="text/javascript" src="lens_geometry.js"></script>
