@@ -84,7 +84,7 @@
     width: 100%; 
     margin: auto; 
     background-color: #353541;
-    background-image: url("./images/scrollpage/GOODS-S_field_NIRCam_image-min.jpg");
+    background-image: url("./images/scrollpage/Euclid_s_view_of_the_Perseus_cluster_of_galaxies.jpg");
     color: #ffffff;
     font-family: Bahnschrift Light;
     font-size: large;
@@ -156,7 +156,7 @@
   
   /* Style the footer */
   .footer {
-    background-color: #545467;
+    background-color: #302f4f;
     padding: 10px;
     text-align: center;
   }
