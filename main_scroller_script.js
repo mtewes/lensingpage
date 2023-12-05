@@ -36,11 +36,11 @@ let alpha_y_WLsg = new Array(w);
 
 //initialize images of deflection angle
 var img_alphax = new Image();
-img_alphax.src = "../images/scrollpage/alphax_flagship_1.png";
+img_alphax.src = "alphax_flagship_1.png";
 var img_alphay = new Image();
-img_alphay.src = "../images/scrollpage/alphay_flagship_1.png";
+img_alphay.src = "alphay_flagship_1.png";
 var img_kappa = new Image();
-img_kappa.src = "../images/scrollpage/kappa_flagship_1.png";
+img_kappa.src = "kappa_flagship_1.png";
 
 //-----------------------------------------------------------------------------//
 //initialize Weak Lenisng canvas with many galaxies
@@ -85,9 +85,9 @@ var imageDataStr, imageDataStrhelp;
 
 //initialize images of flagship and small euclid satellite
 var img_structure = new Image();
-img_structure.src = "../images/scrollpage/Euclid_flagship_mock_galaxy_catalogue_cropped.png";
+img_structure.src = "Euclid_flagship_mock_galaxy_catalogue_cropped.jpg";
 var img_euclid = new Image();
-img_euclid.src = "../images/scrollpage/Euclid_telescope.png";
+img_euclid.src = "Euclid_telescope_small.png";
 
 //-----------------------------------------------------------------------------//
 //Now load all canvases
