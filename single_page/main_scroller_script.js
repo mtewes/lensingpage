@@ -67,7 +67,7 @@ let green_WLmg = new Array(N_gal);
 
 //Now assign random values for every galaxy
 for(var i=0; i<N_gal; i++){
-    r_WLmg[i] = getRanNum(20,30);
+    r_WLmg[i] = getRanNum(15,25);
     x_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2); //galaxies should not be partially outside the canvas
     y_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2);
     red_WLmg[i] = getRanNum(200,255);
@@ -546,7 +546,7 @@ function checkOverlap(index,x,y,r){
         d = Math.sqrt(Math.pow(d_x, 2) + Math.pow(d_y, 2));
         //if that distance is smaller than sum of both galaxy radii -> overlap,
         //the factor 1.5 tries to account for stretching of the galaxies due to lensing
-        if(d < 1.5*(r[index] + r[j])){
+        if(d < 1.25*(r[index] + r[j])){
             return true;
         }
     }
