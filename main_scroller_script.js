@@ -67,7 +67,7 @@ let green_WLmg = new Array(N_gal);
 
 //Now assign random values for every galaxy
 for(var i=0; i<N_gal; i++){
-    r_WLmg[i] = getRanNum(20,30);
+    r_WLmg[i] = getRanNum(15,25);
     x_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2); //galaxies should not be partially outside the canvas
     y_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2);
     red_WLmg[i] = getRanNum(200,255);
@@ -269,22 +269,24 @@ window.onload = function() {
     structure_map.drawImage(img_euclid, 0, 0, img_euclid.width, img_euclid.height, 0, (h_stripe-euclid_offset*img_euclid.height/img_euclid.width)/2, euclid_offset, euclid_offset*img_euclid.height/img_euclid.width)
 
     let w_image = Math.round(canvas_Str.width/2); //width of flagship clipping on canvas
-    let h_image = canvas_Str.height - (h_stripe+50); //height of flagship clipping on canvas
+    let h_image = canvas_Str.height - (h_stripe+60); //height of flagship clipping on canvas
     let w_clip = h_image*(canvas_Str.width-euclid_offset)/h_stripe; //width of flagship clipping in original flagship image
     let w_clip_stripe = w_clip*(canvas_Str.width-euclid_offset)/img_structure.width; //width of flagship clipping inside flagship stripe
     
     //draw flagship image stripe
     structure_map.drawImage(img_structure, 0, 0, img_structure.width, img_structure.height, euclid_offset, 0, canvas_Str.width-euclid_offset, h_stripe);
-    //draw arrow for timeline
-    drawArrow(structure_map, euclid_offset, h_stripe+12, canvas_Str.width-8, h_stripe+12, 8, 'black');
-    //timeline description
+    //description above arrow
     structure_map.font = "bold 20px Bahnschrift";
-    structure_map.textAlign = "left";
-    structure_map.fillText("Heutiges Universum", euclid_offset, h_stripe+36);
+    structure_map.fillStyle = 'rgb(38, 32, 91)';
     structure_map.textAlign = "center";
-    structure_map.fillText("Euclid blickt in die Vergangenheit", euclid_offset+(canvas_Str.width-euclid_offset)/2-100, h_stripe+36);
+    structure_map.fillText("Euclid blickt in die Vergangenheit", euclid_offset+(canvas_Str.width-euclid_offset)/2, h_stripe+18);
+    //draw arrow for timeline
+    drawArrow(structure_map, euclid_offset, h_stripe+28, canvas_Str.width-8, h_stripe+28, 8, 'rgb(38, 32, 91)');
+    //timeline description
+    structure_map.textAlign = "left";
+    structure_map.fillText("Heutiges Universum", euclid_offset, h_stripe+50);
     structure_map.textAlign = "right";
-    structure_map.fillText("Universum vor 11 Milliarden Jahren", canvas_Str.width, h_stripe+36);
+    structure_map.fillText("Universum vor 11 Milliarden Jahren", canvas_Str.width, h_stripe+50);
     
     imageDataStr = structure_map.getImageData(0,0,canvas_Str.width,canvas_Str.height);
     imageDataStrhelp = structure_map.getImageData(0,0,canvas_Str.width,canvas_Str.height);
@@ -304,7 +306,7 @@ window.onload = function() {
     var curXsold = curXs;
     //draw initial cursor and initial clipped image on canvas
     drawcursor(curXs, h_stripe, curXsold, w_clip_stripe);
-    structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+50, w_image, h_image);
+    structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+60, w_image, h_image);
     
     //update canvas on mousemove inside flagship image
     canvas_Str.addEventListener("mousemove", (e) => {
@@ -320,7 +322,7 @@ window.onload = function() {
             //save old cursor coordinate
             curXsold = curXs;
             //draw new clipped image
-            structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+50, w_image, h_image);
+            structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+60, w_image, h_image);
         }
     });
     canvas_Str.addEventListener("touchmove", (e) => {
@@ -544,7 +546,7 @@ function checkOverlap(index,x,y,r){
         d = Math.sqrt(Math.pow(d_x, 2) + Math.pow(d_y, 2));
         //if that distance is smaller than sum of both galaxy radii -> overlap,
         //the factor 1.5 tries to account for stretching of the galaxies due to lensing
-        if(d < 1.5*(r[index] + r[j])){
+        if(d < 1.25*(r[index] + r[j])){
             return true;
         }
     }

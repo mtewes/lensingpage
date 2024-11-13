@@ -8,6 +8,7 @@
     <title>Wie kann Euclid das dunkle Universum sehen?</title>
     <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">-->
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="./Euclid_telescope_small.png">
 
     <style>
       .bd-placeholder-img {
@@ -165,14 +166,14 @@
 <p><strong>Bewege</strong> die rote Galaxie mal hinter die gelbe!</p>
 
 <p>
-<canvas id="strong_lensing" width="700", height="700" style="width:100%;"></canvas>
+<canvas id="strong_lensing" width="700", height="700" style="width:100%; cursor: crosshair;"></canvas>
 </p>
 <p>
 Das Licht der hinteren roten Galaxie wird durch die Schwerkraft der gelben Galaxie abgelenkt. Daher siehst du nur ein stark verzertes Bild der roten Galaxie, oder du siehst sie sogar mehrmals!  
 Man nennt dieses Phenomen den <i>starken Gravitationslinseneffekt</i>.
 </p>
 <p>
-  Und den gibt es wirklich! Hier zwei beispielhafte Aufnahmen des Weltraumteleskops Hubble, die uns dieses Phenomen eindeutig zeigen. Wir kennen schon hunderte solcher Gravitationlinsen.
+  Und den gibt es wirklich! Hier ein paar beispielhafte Aufnahmen der Weltraumteleskope Hubble und Euclid, die uns dieses Phenomen eindeutig zeigen. Wir kennen schon hunderte solcher Gravitationlinsen.
 </p>
 
 
@@ -181,19 +182,27 @@ Man nennt dieses Phenomen den <i>starken Gravitationslinseneffekt</i>.
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
         <img src="images/hubble_quintuple_quasar.jpg" class="d-block w-100" alt="Hubble Quintuple Quasar">
         <div class="carousel-caption d-none d-md-block">
-          <a href="https://esahubble.org/images/potw2132a/" class="btn btn-outline-secondary btn-sm">Quelle: ESA/Hubble & NASA, T. Treu</a>
+          <a href="https://esahubble.org/images/potw2132a/" class="btn btn-outline-secondary btn-sm">Quelle: ESA/Hubble & NASA, T. Treu,  J. Schmidt</a>
         </div>
       </div>
       
       <div class="carousel-item">
         <img src="images/hubble_GAL-CLUS-022058s.jpg" class="d-block w-100" alt="Hubble GAL-CLUS-022058s">
         <div class="carousel-caption d-none d-md-block">
-          <a href="https://esahubble.org/images/potw2050a/" class="btn btn-outline-secondary btn-sm">Quelle: ESA/Hubble & NASA, S. Jha</a>
+          <a href="https://esahubble.org/images/potw2050a/" class="btn btn-outline-secondary btn-sm">Quelle: ESA/Hubble & NASA, S. Jha, L. Shatz</a>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img src="images/Closer_Euclid_view_of_Abell_2390.jpg" class="d-block w-100" alt="Hubble GAL-CLUS-022058s">
+        <div class="carousel-caption d-none d-md-block">
+          <a href="https://www.esa.int/ESA_Multimedia/Images/2024/05/Closer_Euclid_view_of_Abell_2390" class="btn btn-outline-secondary btn-sm">Quelle: ESA/Euclid/Euclid Consortium/NASA, J.-C. Cuillandre , G. Anselmi</a>
         </div>
       </div>
       
@@ -205,6 +214,10 @@ Man nennt dieses Phenomen den <i>starken Gravitationslinseneffekt</i>.
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden"></span>
     </button>
   </div>
 
@@ -246,38 +259,80 @@ Man nennt dieses Phenomen den <i>starken Gravitationslinseneffekt</i>.
 </figure>
 -->
 
-
-
-Wir sehen also gar nicht, wo diese rote Galaxie wirklc
+<br>
+<p>
+Wir sehen also gar nicht, wo diese rote Galaxie wirklich ist, sondern nur ihr verzerrtes Bild an der durch den <i>Gravitationslinseneffekt</i>
+scheinbar verschobenen Position.
 Damit 
+</p> 
     
-    
-    <h2>Und nun zum <i>schwachen</i> Gravitationslinseneffekt</h2>
+<!--    <h2>Und nun zum <i>schwachen</i> Gravitationslinseneffekt</h2> -->
+<p>
+Die meisten Galaxien, die wir beobachten können, werden allerdings nicht stark verzerrt, da ihr Licht nicht nahe genug an massereichen Objekten im Vordergrund vorbeiläuft
+- dennoch wird ihr Licht gerinfügig beeinflusst. In diesem Fall reden wir vom <b><i>schwachen</i> Gravitationslinseneffekt</b>.
+Die entstehenden schwachen Verzerrungen, könnte man 'mit dem bloßen Auge' nicht so leicht wahrnehmen, wie es beim <i>starken</i> Gravitationslinseneffekt der Fall ist.
+</p>
+<p>
+<b>Bewege</b> erneut die rote Galaxie, um den <i>schwachen</i> Gravitationslinseneffekt sichtbar zu machen.
+</p>
       <p>
         <a class="btn btn-dark" id="toggle_dm_wl" role="button">Ein-/Ausblenden der dunklen Materie Verteilung</a>
       </p>
       <p>
-    <canvas id="wl_kappa_map" width="700", height="700" style="width:100%;"></canvas>
+    <canvas id="wl_kappa_map" width="700", height="700" style="width:100%; cursor: crosshair;"></canvas>
     </p>
-  
+<p>
+Das Licht der roten Galaxie aus dem Hintergrund wird hier von einer davor liegenden Materieverteilung
+schwach beeinflusst wird, allerdings etwas übertrieben dargestellt.
+</p>
+<p>
+Die Beobachtung einer einzelnen Galaxie, die durch den schwachen Gravitationslinseneffekt verzerrt wird, gibt uns
+kaum Information über die großflächige Verteilung der Materie, die den Effekt verursacht.
+Daher ist es nötig eine Vielzahl von schwach verzerrten Galaxien in einem Ausschnitt des Himmels zu beobachten - und genau diese Informationen
+werden uns die Daten von Euclid liefern. Durch die Anwendung <i>statistischer</i> Methoden lässt sich dann ermitteln, wie die Materie 
+im Universum verteilt ist.
+<!--Das ändert sich aber, sobald wir eine Vielzahl
+von schwach verzerrten Galaxien beobachten. So erhalten wir Informationen über die Materieverteilung an und zwischen den vielen verschiedenen Positionen
+der beobachteten Galaxien und es lässt sich so <i>statistisch</i> ermitteln, wie die Materie im Vordergrund verteilt ist.-->
+</p>
+<p>
+<b>Erhöhe</b> einmal die Anzahl an beobachteten Galaxien und vergleiche deren verzerrten Bilder mit der unterliegenden Verteilung der dunklen Materie.
+</p>
 
     <p>
       <p>
         <label for="gal_num">Zahl der Galaxien:</label>
-        <input type="range" id="gal_num" min="10" max="60" value="10" class="slider">
+        <input type="range" id="gal_num" min="10" max="80" value="10" class="slider">
         <output id="gal_num_out"></output>
         <br>
         <a class="btn btn-dark" id="toggle_dm_gal_grid" role="button">Ein-/Ausblenden der dunklen Materie Verteilung</a>
       </p>
-    <canvas id="grid_lens" width="700", height="700" style="width:100%;"></canvas>
+    <canvas id="grid_lens" width="700", height="700" style="width:100%; cursor: crosshair;"></canvas>
     </p>
-    
+
+<p>
+Du kannst erkennen, wie die Verzerrungen der Bilder der Galaxien der Materieverteilung folgen.
+So ermöglicht es der schwache Gravitationslinseneffekt die Struktur im Universum zu kartieren, die maßgeblich
+durch die, uns andernfalls unsichtbare, dunkle Materie beeinflusst wird.
+Und dadurch, dass Euclid Galaxien bis in große Entfernungen beobachtet, was immer auch einem Blick in die
+Vergangenheit entspricht, können wir die Verteilung der Struktur in verschiedenen Epochen der
+Expansion des Universums sehen.
+</p>
+<p>
+<b>Bewege</b> in der unteren Abbildung den Cursor über den ganzen Zeitstrahl, um zu sehen, wie die
+Entwicklung der Struktur im Universum aussehen könnte. Du kannst sehen wie sich die Galaxien, die in die
+Verteilung der dunklen Materie eingebettet sind, im Laufe der Zeit zu immer stärker ausgeprägten Knoten und Filamenten
+zusammenfinden.
+</p>
 
     <p>
-    <canvas id="structure_map" width="700", height="700" style="width:100%;"></canvas>
+    <canvas id="structure_map" width="700", height="700" style="width:100%; cursor: crosshair;"></canvas>
     </p>
       
-
+<p>
+Durch Euclids Beobachtungen wird also die Verteilung der Struktur im Universum und deren Entwicklung besser
+verstanden werden können.
+</p>
 
         
 
