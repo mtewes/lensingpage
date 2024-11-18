@@ -276,12 +276,12 @@ window.onload = function() {
     //draw flagship image stripe
     structure_map.drawImage(img_structure, 0, 0, img_structure.width, img_structure.height, euclid_offset, 0, canvas_Str.width-euclid_offset, h_stripe);
     //description above arrow
-    structure_map.font = "bold 20px Bahnschrift";
-    structure_map.fillStyle = 'rgb(38, 32, 91)';
+    structure_map.font = "18px Arial, sans-serif";
+    structure_map.fillStyle = 'rgb(200, 200, 200)';
     structure_map.textAlign = "center";
     structure_map.fillText("Euclid blickt in die Vergangenheit", euclid_offset+(canvas_Str.width-euclid_offset)/2, h_stripe+18);
     //draw arrow for timeline
-    drawArrow(structure_map, euclid_offset, h_stripe+28, canvas_Str.width-8, h_stripe+28, 8, 'rgb(38, 32, 91)');
+    drawArrow(structure_map, euclid_offset, h_stripe+28, canvas_Str.width-8, h_stripe+28, 4, 'rgb(200, 200, 200)');
     //timeline description
     structure_map.textAlign = "left";
     structure_map.fillText("Heutiges Universum", euclid_offset, h_stripe+50);
