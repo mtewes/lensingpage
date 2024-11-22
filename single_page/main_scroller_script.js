@@ -2,7 +2,7 @@
 var imageDataLensSL, imageDataSrcSL;
 
 var canvasSL = document.getElementById('strong_lensing');
-var lensSL = canvasSL.getContext('2d');
+var lensSL = canvasSL.getContext('2d', { willReadFrequently: true });
 
 var w = canvasSL.width;
 var h = canvasSL.height;
@@ -24,41 +24,25 @@ for(var i=0; i<w; i++){
 var imageDataLens_WLsg, imageDataSrc_WLsg, imageDataAlphax, imageDataAlphay;
 
 var canvas_WLsg = document.getElementById('wl_kappa_map');
-var lens_WLsg = canvas_WLsg.getContext('2d');
-
-//initialize deflection angles, 2d-array
-let alpha_x_WLsg = new Array(w);
-let alpha_y_WLsg = new Array(w);
-    for(var i=0; i<w; i++){
-        alpha_x_WLsg[i] = new Array(h);
-        alpha_y_WLsg[i] = new Array(h);
-    }
+var lens_WLsg = canvas_WLsg.getContext('2d', { willReadFrequently: true });
 
 //initialize images of deflection angle
 var img_alphax = new Image();
-img_alphax.src = "alphax_flagship_1.png";
+img_alphax.src = "images/alphax_flagship_1.png";
 var img_alphay = new Image();
-img_alphay.src = "alphay_flagship_1.png";
+img_alphay.src = "images/alphay_flagship_1.png";
 var img_kappa = new Image();
-img_kappa.src = "kappa_flagship_1.png";
+img_kappa.src = "images/kappa_flagship_1.png";
 
 //-----------------------------------------------------------------------------//
 //initialize Weak Lenisng canvas with many galaxies
-var imageDataLens_WLmg, imageDataSrc_WLmg, black;
+//var imageDataLens_WLmg, imageDataSrc_WLmg, black;
 
 var canvas_WLmg = document.getElementById('grid_lens');
-var lens_WLmg = canvas_WLmg.getContext('2d');
-
-//initialize deflection angles, 2d-array
-let alpha_x_WLmg = new Array(w);
-let alpha_y_WLmg = new Array(w);
-    for(var i=0; i<w; i++){
-        alpha_x_WLmg[i] = new Array(h);
-        alpha_y_WLmg[i] = new Array(h);
-    }
+var lens_WLmg = canvas_WLmg.getContext('2d', { willReadFrequently: true });
 
 //Generate arrays of galaxy position, size, color
-let N_gal = document.getElementById('gal_num').max; //read the number of galaxies from html slider
+let N_gal = Number(document.getElementById('gal_num').max); //read the number of galaxies from html slider
 let r_WLmg = new Array(N_gal); //size
 let x_WLmg = new Array(N_gal);  //x,y coordinates
 let y_WLmg = new Array(N_gal);
@@ -80,14 +64,14 @@ for(var i=0; i<N_gal; i++){
 //-----------------------------------------------------------------------------//
 //initialize Structure canvas with Flagship image
 var canvas_Str = document.getElementById('structure_map');
-var structure_map = canvas_Str.getContext('2d');
+var structure_map = canvas_Str.getContext('2d', { willReadFrequently: true });
 var imageDataStr, imageDataStrhelp;
 
 //initialize images of flagship and small euclid satellite
 var img_structure = new Image();
-img_structure.src = "Euclid_flagship_mock_galaxy_catalogue_cropped.jpg";
+img_structure.src = "images/Euclid_flagship_mock_galaxy_catalogue_cropped.jpg";
 var img_euclid = new Image();
-img_euclid.src = "Euclid_telescope_small.png";
+img_euclid.src = "images/Euclid_telescope_small.png";
 
 //-----------------------------------------------------------------------------//
 //Now load all canvases
@@ -227,38 +211,59 @@ window.onload = function() {
     //WL canvas with many galaxies
     lens_WLmg.fillStyle = 'black'; //fill canvas black
     lens_WLmg.fillRect(0,0,w,h);
-    imageDataLens_WLmg = lens_WLmg.getImageData(0, 0, w, h);
-    black = lens_WLmg.getImageData(0, 0, w, h);
+    //imageDataLens_WLmg = lens_WLmg.getImageData(0, 0, w, h);
+    //black = lens_WLmg.getImageData(0, 0, w, h);
 
     //number of drawn galaxies defined by slider gal_num
     let gal_num_range = document.getElementById('gal_num');
-    var N_gal_used = gal_num_range.value;
+    var N_gal_used = Number(gal_num_range.value);
     document.getElementById('gal_num_out').value = N_gal_used; //print number of drawn galaxies
-    drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_gal_used); //update canvas
+    //drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_gal_used); //update canvas
 
+    //Create many images initially and store them, so we just need to load them when updating N_gal_used
+    const slider_step = Number(gal_num_range.step);
+    const N_imgs = Math.round(N_gal/slider_step);
+    const imageDataArray = new Array(N_imgs); //store images of lensed galaxies
+    const imageDataArray_dm = new Array(N_imgs); //here again but with dm distribution in the background
+    //Create and store images with dm background
+    for(var i=0; i<N_imgs; i++){
+        var n = N_gal_used+i*slider_step;
+        imageDataArray[i] = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, n);
+    }
+    //Now create and store images with dm background
+    lens_WLmg.drawImage(img_kappa, 0, 0);
+    for(var i=0; i<N_imgs; i++){
+        var n = N_gal_used+i*slider_step;
+        imageDataArray_dm[i] = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, n);
+    }
+    lens_WLmg.putImageData(imageDataArray[0], 0, 0);
+
+    let pressed_WLmg=false;
     //event listener for slider movement
     gal_num_range.addEventListener('mouseup', function(){
-        N_gal_used = gal_num_range.value;
+        N_gal_used = Number(gal_num_range.value);
         document.getElementById('gal_num_out').value = N_gal_used;
-        drawcanvas_WLmg(alpha_x_WL,alpha_y_WL,N_gal_used); //update canvas
+        let index = Math.round(N_gal_used/slider_step)-1;
+        if(pressed_WLmg==false){
+            lens_WLmg.putImageData(imageDataArray[index], 0, 0);
+        } else{
+            lens_WLmg.putImageData(imageDataArray_dm[index], 0, 0);
+        }
     })
     
-    let pressed_WLmg=false;
     //toggle the visibility of dm mass distribution as above in WLsg
     document.getElementById("toggle_dm_gal_grid").onclick = function(){
         if(pressed_WLmg==false){
-            lens_WLmg.drawImage(img_kappa, 0, 0);
-            black = lens_WLmg.getImageData(0,0,w,h);
-            for(var i=0; i<w*h*4; i++){
-                black.data[i*4]=0; //take out all red
-            }
+            N_gal_used = Number(gal_num_range.value);
+            let index = Math.round(N_gal_used/slider_step)-1;
+            lens_WLmg.putImageData(imageDataArray_dm[index], 0, 0);
             pressed_WLmg=true;
         } else{
-            lens_WLmg.fillRect(0,0,w,h);
-            black = lens_WLmg.getImageData(0,0,w,h);
+            N_gal_used = Number(gal_num_range.value);
+            let index = Math.round(N_gal_used/slider_step)-1;
+            lens_WLmg.putImageData(imageDataArray[index], 0, 0);
             pressed_WLmg=false;
         }
-        drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_gal_used);
     };
 
     //-----------------------------------------------------------------------------//
@@ -335,6 +340,8 @@ window.onload = function() {
         });
         canvas_Str.dispatchEvent(mouseEvent);
     });
+
+    console.log(window.performance.memory);
 };
 
 //SL canvas: draw lens galaxy and calculate deflection angles
@@ -348,27 +355,28 @@ function drawlensSL(or, q, a, thetaE, thetaC){
             x_rot = (x-origin_x)*Math.cos(or) + (origin_y-y)*Math.sin(or);
             y_rot = -(x-origin_x)*Math.sin(or) + (origin_y-y)*Math.cos(or);
             //calculate rho which is constant on an ellipse of axis ratio q
-            rho = Math.sqrt(Math.pow(x_rot,2)*q + Math.pow(y_rot,2)/q);
+            rho_sq = x_rot*x_rot*q + y_rot*y_rot/q;
             //calculate index of pixel (x,y) for imageData arrays
             index = (Math.round(x) + Math.round(y)*w)*4;
             //fill imageData with lens galaxy of certain brightness profile,
             //rho defines the brightness in the current pixel
-            imageDataSrcSL.data[index] = imageData_profile(rho, a/2.8, 255);
-            imageDataSrcSL.data[index+1] = imageData_profile(rho, a/2.8, 200);
-            imageDataSrcSL.data[index+2] = imageData_profile(rho, a/2.8, 100);
+            gal_profile = imageData_profile(rho_sq, a*a/(2.8*2.8));
+            imageDataSrcSL.data[index] = gal_profile*255;
+            imageDataSrcSL.data[index+1] = gal_profile*200;
+            imageDataSrcSL.data[index+2] = gal_profile*100;
             imageDataSrcSL.data[index+3] = 255;
 
             if(x<=w-0.9 && y<=h-0.9){
                 //calculate deflection angles in the non-singular isothermal sphere model
-                var Y = Math.sqrt(Math.pow(rho,2)+Math.pow(thetaC,2));
-                a_x = (1-Math.pow(eps,2))*thetaE/(2*Math.sqrt(eps))*Math.atan(2*Math.sqrt(eps)*x_rot/((1-Math.pow(eps,2))*Y + Math.pow(1-eps,2)*thetaC));
-                a_y = (1-Math.pow(eps,2))*thetaE/(2*Math.sqrt(eps))*Math.atanh(2*Math.sqrt(eps)*y_rot/((1-Math.pow(eps,2))*Y + Math.pow(1-eps,2)*thetaC));
+                var Y = Math.sqrt(rho_sq+thetaC*thetaC);
+                a_x = (1-eps*eps)*thetaE/(2*Math.sqrt(eps))*Math.atan(2*Math.sqrt(eps)*x_rot/((1-eps*eps)*Y + (1-eps)*(1-eps)*thetaC));
+                a_y = (1-eps*eps)*thetaE/(2*Math.sqrt(eps))*Math.atanh(2*Math.sqrt(eps)*y_rot/((1-eps*eps)*Y + (1-eps)*(1-eps)*thetaC));
                 alpha_xSL[Math.round(x)][Math.round(y)] = a_x*Math.cos(or) - a_y*Math.sin(or);
                 alpha_ySL[Math.round(x)][Math.round(y)] = a_x*Math.sin(or) + a_y*Math.cos(or);
                 //make sure the deflection drops to almost 0 towards canvas border
                 //else the deflection angle would be constant which is not desired here
-                alpha_xSL[Math.round(x)][Math.round(y)] *= Math.exp(-Math.pow(rho,2)/(2*Math.pow(0.28*canvasSL.width,2)));
-                alpha_ySL[Math.round(x)][Math.round(y)] *= Math.exp(-Math.pow(rho,2)/(2*Math.pow(0.28*canvasSL.width,2)));
+                alpha_xSL[Math.round(x)][Math.round(y)] *= Math.exp(-rho_sq/(2*Math.pow(0.28*canvasSL.width,2)));
+                alpha_ySL[Math.round(x)][Math.round(y)] *= Math.exp(-rho_sq/(2*Math.pow(0.28*canvasSL.width,2)));
                 /*detA[Math.round(x)][Math.round(y)] = 1 - thetaE/Y + (1-Math.pow(eps,2))*thetaC*Math.pow(thetaE,2) / (Y*(2*(1+Math.pow(eps,2))*Math.pow(thetaC,2) + Math.pow(x_rot,2) + Math.pow(y_rot,2) + 2*(1-Math.pow(eps,2))*Y*thetaC));
                 if(Math.abs(detA[Math.round(x)][Math.round(y)])<0.01){ //draw critical curve
                     imageDataSrc1.data[index+1] = 255;
@@ -395,13 +403,14 @@ function drawcanvasSL(beta_x, beta_y, alpha_xSL, alpha_ySL) {
             src_x = (x-origin_x) - alpha_xSL[x][y];
             src_y = (origin_y-y) - alpha_ySL[x][y];
             //calculate distance to center of source galaxy (beta)
-            d = Math.sqrt(Math.pow(beta_x - src_x, 2) + Math.pow(beta_y - src_y, 2));
+            d_sq = (beta_x - src_x)*(beta_x - src_x) + (beta_y - src_y)*(beta_y - src_y);
             //if that distance is inside the galaxy radius, fill the pixel
-            if(d <= r){
+            if(d_sq <= r*r){
                 index = (x + y*w)*4; //index of pixel in imageData
-                imageDataLensSL.data[index] += imageData_profile(d, r/2.8, 255); //fill galaxy pixel
-                imageDataLensSL.data[index+1] += imageData_profile(d, r/2.8, 100);
-                imageDataLensSL.data[index+2] += imageData_profile(d, r/2.8, 100);
+                gal_profile = imageData_profile(d_sq, r*r/(2.8*2.8));
+                imageDataLensSL.data[index] += gal_profile*255; //fill galaxy pixel
+                imageDataLensSL.data[index+1] += gal_profile*100;
+                imageDataLensSL.data[index+2] += gal_profile*100;
                 imageDataLensSL.data[index+3] = 255;
             }
         }
@@ -420,12 +429,13 @@ function drawcanvas_WLsg(beta_x, beta_y, alpha_x_WL, alpha_y_WL) {
         for(var x=0; x<w; x++){
             src_x = (x-origin_x) - alpha_x_WL[x][y];
             src_y = (origin_y-y) - alpha_y_WL[x][y];
-            d = Math.sqrt(Math.pow(beta_x - src_x, 2) + Math.pow(beta_y - src_y, 2));
-            if(d <= r){
+            d_sq = (beta_x - src_x)*(beta_x - src_x) + (beta_y - src_y)*(beta_y - src_y);
+            if(d_sq <= r*r){
                 index = (x + y*w)*4;
-                imageDataLens_WLsg.data[index] += imageData_profile(d, r/2.8, 255);
-                imageDataLens_WLsg.data[index+1] += imageData_profile(d, r/2.8, 100);
-                imageDataLens_WLsg.data[index+2] += imageData_profile(d, r/2.8, 100);
+                gal_profile = imageData_profile(d_sq, r*r/(2.8*2.8));
+                imageDataLens_WLsg.data[index] += gal_profile*255;
+                imageDataLens_WLsg.data[index+1] += gal_profile*100;
+                imageDataLens_WLsg.data[index+2] += gal_profile*100;
                 imageDataLens_WLsg.data[index+3] = 255;
             }
         }
@@ -436,28 +446,29 @@ function drawcanvas_WLsg(beta_x, beta_y, alpha_x_WL, alpha_y_WL) {
 
 //WL many galaxy canvas, same as for SL canvas above
 function drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_gal_used) {
-    for(var i=0; i<h*w*4; i++){
-        imageDataLens_WLmg.data[i] = black.data[i];
-    }
+    var imageDataLens_WLmg = lens_WLmg.getImageData(0, 0, w, h);
     r=25;
     for(var y=0; y<h; y++){
         for(var x=0; x<w; x++){
             src_x = (x-origin_x) - alpha_x_WL[x][y]; //arbitrary deflection angle from array alpha_x,y
             src_y = (origin_y-y) - alpha_y_WL[x][y];
+            index = (x + y*w)*4;
+            imageDataLens_WLmg.data[index] = 0; //take out red, dm is shown in blue
             for(var i=0; i<N_gal_used; i++){
-                d = Math.sqrt(Math.pow(x_WLmg[i]-src_x, 2) + Math.pow(y_WLmg[i]-src_y, 2));
-                if(d<=r_WLmg[i]){
-                    index = (x + y*w)*4;
-                    imageDataLens_WLmg.data[index] += imageData_profile(d, r_WLmg[i]/2.8, red_WLmg[i]);
-                    imageDataLens_WLmg.data[index+1] += imageData_profile(d, r_WLmg[i]/2.8, green_WLmg[i]);
-                    imageDataLens_WLmg.data[index+2] += imageData_profile(d, r_WLmg[i]/2.8, 100);
+                d_sq = (x_WLmg[i]-src_x)*(x_WLmg[i]-src_x) + (y_WLmg[i]-src_y)*(y_WLmg[i]-src_y);
+                if(d_sq<=r_WLmg[i]*r_WLmg[i]){
+                    gal_profile = imageData_profile(d_sq, r_WLmg[i]*r_WLmg[i]/(2.8*2.8));
+                    imageDataLens_WLmg.data[index] += gal_profile*red_WLmg[i];
+                    imageDataLens_WLmg.data[index+1] += gal_profile*green_WLmg[i];
+                    imageDataLens_WLmg.data[index+2] += gal_profile*100;
                     imageDataLens_WLmg.data[index+3] = 255;
                 }
             }
         }
     }
 
-    lens_WLmg.putImageData(imageDataLens_WLmg, 0, 0);
+    //lens_WLmg.putImageData(imageDataLens_WLmg, 0, 0);
+    return imageDataLens_WLmg;
 }
 
 //Structure map cursor
@@ -526,9 +537,10 @@ function drawArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color){
 }
 
 //Give brightness of galaxy pixel according to its distance d from the galaxy center,
-//the galaxy scale radius r_scale and the color value max
-function imageData_profile(d, r_scale, max){
-    return max*Math.exp(-3.6713 * (Math.pow(d/r_scale, 1/2) - 1)); //Sersic profile with n=2
+//the galaxy scale radius r_scale
+//d and r_scale are given squared -> avoid taking multiple sqrt
+function imageData_profile(d_sq, r_scale_sq){
+    return Math.exp(-3.6713 * (Math.pow(d_sq/r_scale_sq, 0.25) - 1)); //Sersic profile with n=2
 }
 
 //random number generator in a given interval with uniform probability distribution
@@ -543,10 +555,10 @@ function checkOverlap(index,x,y,r){
         d_x = x[index] - x[j];
         d_y = y[index] - y[j];
         //calculate distance between galaxy centers
-        d = Math.sqrt(Math.pow(d_x, 2) + Math.pow(d_y, 2));
+        d = Math.sqrt(d_x*d_x + d_y*d_y);
         //if that distance is smaller than sum of both galaxy radii -> overlap,
-        //the factor 1.5 tries to account for stretching of the galaxies due to lensing
-        if(d < 1.25*(r[index] + r[j])){
+        //the factor 1.15 tries to account for stretching of the galaxies due to lensing
+        if(d < 1.15*(r[index] + r[j])){
             return true;
         }
     }
