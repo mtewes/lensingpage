@@ -227,7 +227,7 @@ window.onload = function() {
 
     let pressed_WLmg=false;
     //event listener for slider movement
-    gal_num_range.addEventListener('mouseup', function(){
+    gal_num_range.addEventListener('input', function(){
         N_gal_used = Number(gal_num_range.value);
         document.getElementById('gal_num_out').value = N_gal_used;
         let index = Math.round(N_gal_used/slider_step)-1;
@@ -236,7 +236,18 @@ window.onload = function() {
         } else{
             lens_WLmg.putImageData(imageDataArray_dm[index], 0, 0);
         }
-    })
+    });
+
+    //gal_num_range.addEventListener("touchmove", (e) => {
+    //    e.preventDefault();
+    //    e.stopPropagation();
+    //    var touch = e.touches[0];
+    //    var mouseEvent = new MouseEvent("change", {
+    //        clientX: touch.clientX,
+    //        clientY: touch.clientY
+    //    });
+    //    canvas_WLsg.dispatchEvent(mouseEvent);
+    //});
     
     //toggle the visibility of dm mass distribution as above in WLsg
     document.getElementById("toggle_dm_gal_grid").onclick = function(){
