@@ -51,7 +51,7 @@ let green_WLmg = new Array(N_gal);
 
 //Now assign random values for every galaxy
 for(var i=0; i<N_gal; i++){
-    r_WLmg[i] = getRanNum(15,25);
+    r_WLmg[i] = getRanNum(4,20);
     x_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2); //galaxies should not be partially outside the canvas
     y_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2);
     red_WLmg[i] = getRanNum(200,255);
@@ -69,9 +69,10 @@ var imageDataStr, imageDataStrhelp;
 
 //initialize images of flagship and small euclid satellite
 var img_structure = new Image();
+//img_structure.src = "images/Euclid_flagship_mock_galaxy_catalogue_cropped_small.jpg";
 img_structure.src = "images/Euclid_flagship_mock_galaxy_catalogue_cropped.jpg";
 var img_euclid = new Image();
-img_euclid.src = "images/Euclid_telescope_small.png";
+img_euclid.src = "images/Euclid_spacecraft.jpg";
 
 //-----------------------------------------------------------------------------//
 //Now load all canvases
@@ -156,7 +157,7 @@ window.onload = function() {
         }
     }
     //normalize deflection angles to a reasonable WL value
-    let alpha_max_norm = 25;
+    let alpha_max_norm = 50;
     for(var x=0; x<w; x++){
         for(var y=0; y<h; y++){
             alpha_x_WL[x][y] *= alpha_max_norm/255;
@@ -211,36 +212,22 @@ window.onload = function() {
     //WL canvas with many galaxies
     lens_WLmg.fillStyle = 'black'; //fill canvas black
     lens_WLmg.fillRect(0,0,w,h);
-    //imageDataLens_WLmg = lens_WLmg.getImageData(0, 0, w, h);
-    //black = lens_WLmg.getImageData(0, 0, w, h);
 
     //number of drawn galaxies defined by slider gal_num
     let gal_num_range = document.getElementById('gal_num');
     var N_gal_used = Number(gal_num_range.value);
     document.getElementById('gal_num_out').value = N_gal_used; //print number of drawn galaxies
-    //drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_gal_used); //update canvas
 
     //Create many images initially and store them, so we just need to load them when updating N_gal_used
     const slider_step = Number(gal_num_range.step);
     const N_imgs = Math.round(N_gal/slider_step);
-    const imageDataArray = new Array(N_imgs); //store images of lensed galaxies
-    const imageDataArray_dm = new Array(N_imgs); //here again but with dm distribution in the background
-    //Create and store images with dm background
-    for(var i=0; i<N_imgs; i++){
-        var n = N_gal_used+i*slider_step;
-        imageDataArray[i] = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, n);
-    }
-    //Now create and store images with dm background
-    lens_WLmg.drawImage(img_kappa, 0, 0);
-    for(var i=0; i<N_imgs; i++){
-        var n = N_gal_used+i*slider_step;
-        imageDataArray_dm[i] = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, n);
-    }
+    const imageDataArray = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_imgs, slider_step);
+    const imageDataArray_dm = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_imgs, slider_step, dm=true);
     lens_WLmg.putImageData(imageDataArray[0], 0, 0);
 
     let pressed_WLmg=false;
     //event listener for slider movement
-    gal_num_range.addEventListener('mouseup', function(){
+    gal_num_range.addEventListener('input', function(){
         N_gal_used = Number(gal_num_range.value);
         document.getElementById('gal_num_out').value = N_gal_used;
         let index = Math.round(N_gal_used/slider_step)-1;
@@ -249,7 +236,18 @@ window.onload = function() {
         } else{
             lens_WLmg.putImageData(imageDataArray_dm[index], 0, 0);
         }
-    })
+    });
+
+    //gal_num_range.addEventListener("touchmove", (e) => {
+    //    e.preventDefault();
+    //    e.stopPropagation();
+    //    var touch = e.touches[0];
+    //    var mouseEvent = new MouseEvent("change", {
+    //        clientX: touch.clientX,
+    //        clientY: touch.clientY
+    //    });
+    //    canvas_WLsg.dispatchEvent(mouseEvent);
+    //});
     
     //toggle the visibility of dm mass distribution as above in WLsg
     document.getElementById("toggle_dm_gal_grid").onclick = function(){
@@ -268,25 +266,26 @@ window.onload = function() {
 
     //-----------------------------------------------------------------------------//
     //Structure canvas with Flagship dm distribution
-    let h_stripe = 200; //height of whole flagship image stripe on the canvas
-    let euclid_offset = 0.4*h_stripe*img_euclid.height/img_euclid.width; //offset off x-coord. due to the small eculid image
+    let h_stripe = 86; //height of whole flagship image stripe on the canvas
+    let h_space = 100; // space between stripe and image on the canvas
+    let euclid_offset = 1.0*h_stripe*img_euclid.height/img_euclid.width; //offset off x-coord. due to the small eculid image
     //draw the small euclid image, centered in h_stripe
     structure_map.drawImage(img_euclid, 0, 0, img_euclid.width, img_euclid.height, 0, (h_stripe-euclid_offset*img_euclid.height/img_euclid.width)/2, euclid_offset, euclid_offset*img_euclid.height/img_euclid.width)
 
-    let w_image = Math.round(canvas_Str.width/2); //width of flagship clipping on canvas
-    let h_image = canvas_Str.height - (h_stripe+60); //height of flagship clipping on canvas
-    let w_clip = h_image*(canvas_Str.width-euclid_offset)/h_stripe; //width of flagship clipping in original flagship image
+    let w_image = Math.round(canvas_Str.width/1); //width of flagship clipping on canvas
+    let h_image = canvas_Str.height - (h_stripe+h_space); //height of flagship clipping on canvas
+    let w_clip = h_stripe*(img_structure.width)/h_image; //width of flagship clipping in original flagship image (no, on canvas )
     let w_clip_stripe = w_clip*(canvas_Str.width-euclid_offset)/img_structure.width; //width of flagship clipping inside flagship stripe
     
     //draw flagship image stripe
     structure_map.drawImage(img_structure, 0, 0, img_structure.width, img_structure.height, euclid_offset, 0, canvas_Str.width-euclid_offset, h_stripe);
     //description above arrow
     structure_map.font = "18px Arial, sans-serif";
-    structure_map.fillStyle = 'rgb(200, 200, 200)';
+    structure_map.fillStyle = 'rgb(255, 255, 255)';
     structure_map.textAlign = "center";
     structure_map.fillText("Euclid blickt in die Vergangenheit", euclid_offset+(canvas_Str.width-euclid_offset)/2, h_stripe+18);
     //draw arrow for timeline
-    drawArrow(structure_map, euclid_offset, h_stripe+28, canvas_Str.width-8, h_stripe+28, 4, 'rgb(200, 200, 200)');
+    drawArrow(structure_map, euclid_offset, h_stripe+28, canvas_Str.width-8, h_stripe+28, 4, 'rgb(255, 255, 255)');
     //timeline description
     structure_map.textAlign = "left";
     structure_map.fillText("Heutiges Universum", euclid_offset, h_stripe+50);
@@ -311,7 +310,7 @@ window.onload = function() {
     var curXsold = curXs;
     //draw initial cursor and initial clipped image on canvas
     drawcursor(curXs, h_stripe, curXsold, w_clip_stripe);
-    structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+60, w_image, h_image);
+    structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+h_space, w_image, h_image);
     
     //update canvas on mousemove inside flagship image
     canvas_Str.addEventListener("mousemove", (e) => {
@@ -327,7 +326,7 @@ window.onload = function() {
             //save old cursor coordinate
             curXsold = curXs;
             //draw new clipped image
-            structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+60, w_image, h_image);
+            structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+h_space, w_image, h_image);
         }
     });
     canvas_Str.addEventListener("touchmove", (e) => {
@@ -445,30 +444,45 @@ function drawcanvas_WLsg(beta_x, beta_y, alpha_x_WL, alpha_y_WL) {
 }
 
 //WL many galaxy canvas, same as for SL canvas above
-function drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_gal_used) {
+function drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_imgs, slider_step, dm=false) {
+    var imageDataArray = new Array(N_imgs);
     var imageDataLens_WLmg = lens_WLmg.getImageData(0, 0, w, h);
-    r=25;
-    for(var y=0; y<h; y++){
-        for(var x=0; x<w; x++){
-            src_x = (x-origin_x) - alpha_x_WL[x][y]; //arbitrary deflection angle from array alpha_x,y
-            src_y = (origin_y-y) - alpha_y_WL[x][y];
-            index = (x + y*w)*4;
-            imageDataLens_WLmg.data[index] = 0; //take out red, dm is shown in blue
-            for(var i=0; i<N_gal_used; i++){
-                d_sq = (x_WLmg[i]-src_x)*(x_WLmg[i]-src_x) + (y_WLmg[i]-src_y)*(y_WLmg[i]-src_y);
-                if(d_sq<=r_WLmg[i]*r_WLmg[i]){
-                    gal_profile = imageData_profile(d_sq, r_WLmg[i]*r_WLmg[i]/(2.8*2.8));
-                    imageDataLens_WLmg.data[index] += gal_profile*red_WLmg[i];
-                    imageDataLens_WLmg.data[index+1] += gal_profile*green_WLmg[i];
-                    imageDataLens_WLmg.data[index+2] += gal_profile*100;
-                    imageDataLens_WLmg.data[index+3] = 255;
+    if(dm==true){
+        lens_WLmg.drawImage(img_kappa, 0, 0);
+        var helpimageData = lens_WLmg.getImageData(0, 0, w, h);
+        for(var y=0; y<h; y++){
+            for(var x=0; x<w; x++){
+                helpimageData.data[(x + y*w)*4] = 0; //take out red, dm is shown in blue
+                helpimageData.data[(x + y*w)*4+3] = 150;
+            }
+        }
+        lens_WLmg.putImageData(helpimageData, 0, 0);
+    }
+    for(var i=0; i<N_imgs; i++){
+        imageDataArray[i] = lens_WLmg.getImageData(0, 0, w, h);
+        for(var y=0; y<h; y++){
+            for(var x=0; x<w; x++){
+                var src_x = (x-origin_x) - alpha_x_WL[x][y]; //arbitrary deflection angle from array alpha_x,y
+                var src_y = (origin_y-y) - alpha_y_WL[x][y];
+                var index = (x + y*w)*4;
+                for(var j=0; j<slider_step; j++){
+                    var ind_gal = i*slider_step+j;
+                    var d_sq = (x_WLmg[ind_gal]-src_x)*(x_WLmg[ind_gal]-src_x) + (y_WLmg[ind_gal]-src_y)*(y_WLmg[ind_gal]-src_y);
+                    if(d_sq<=r_WLmg[ind_gal]*r_WLmg[ind_gal]){
+                        var gal_profile = imageData_profile(d_sq, r_WLmg[ind_gal]*r_WLmg[ind_gal]/(2.8*2.8));
+                        imageDataLens_WLmg.data[index] += gal_profile*red_WLmg[ind_gal];
+                        imageDataLens_WLmg.data[index+1] += gal_profile*green_WLmg[ind_gal];
+                        imageDataLens_WLmg.data[index+2] += gal_profile*100;
+                    }
                 }
+                imageDataArray[i].data[index] += imageDataLens_WLmg.data[index];
+                imageDataArray[i].data[index+1] += imageDataLens_WLmg.data[index+1];
+                imageDataArray[i].data[index+2] += imageDataLens_WLmg.data[index+2];
+                imageDataArray[i].data[index+3] = 255;
             }
         }
     }
-
-    //lens_WLmg.putImageData(imageDataLens_WLmg, 0, 0);
-    return imageDataLens_WLmg;
+    return imageDataArray;
 }
 
 //Structure map cursor
@@ -558,7 +572,7 @@ function checkOverlap(index,x,y,r){
         d = Math.sqrt(d_x*d_x + d_y*d_y);
         //if that distance is smaller than sum of both galaxy radii -> overlap,
         //the factor 1.15 tries to account for stretching of the galaxies due to lensing
-        if(d < 1.15*(r[index] + r[j])){
+        if(d < 0.7*(r[index] + r[j])){
             return true;
         }
     }
