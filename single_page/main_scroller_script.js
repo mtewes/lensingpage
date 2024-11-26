@@ -211,31 +211,17 @@ window.onload = function() {
     //WL canvas with many galaxies
     lens_WLmg.fillStyle = 'black'; //fill canvas black
     lens_WLmg.fillRect(0,0,w,h);
-    //imageDataLens_WLmg = lens_WLmg.getImageData(0, 0, w, h);
-    //black = lens_WLmg.getImageData(0, 0, w, h);
 
     //number of drawn galaxies defined by slider gal_num
     let gal_num_range = document.getElementById('gal_num');
     var N_gal_used = Number(gal_num_range.value);
     document.getElementById('gal_num_out').value = N_gal_used; //print number of drawn galaxies
-    //drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_gal_used); //update canvas
 
     //Create many images initially and store them, so we just need to load them when updating N_gal_used
     const slider_step = Number(gal_num_range.step);
     const N_imgs = Math.round(N_gal/slider_step);
-    const imageDataArray = new Array(N_imgs); //store images of lensed galaxies
-    const imageDataArray_dm = new Array(N_imgs); //here again but with dm distribution in the background
-    //Create and store images with dm background
-    for(var i=0; i<N_imgs; i++){
-        var n = N_gal_used+i*slider_step;
-        imageDataArray[i] = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, n);
-    }
-    //Now create and store images with dm background
-    lens_WLmg.drawImage(img_kappa, 0, 0);
-    for(var i=0; i<N_imgs; i++){
-        var n = N_gal_used+i*slider_step;
-        imageDataArray_dm[i] = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, n);
-    }
+    const imageDataArray = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_imgs, slider_step);
+    const imageDataArray_dm = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_imgs, slider_step, dm=true);
     lens_WLmg.putImageData(imageDataArray[0], 0, 0);
 
     let pressed_WLmg=false;
@@ -445,30 +431,45 @@ function drawcanvas_WLsg(beta_x, beta_y, alpha_x_WL, alpha_y_WL) {
 }
 
 //WL many galaxy canvas, same as for SL canvas above
-function drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_gal_used) {
+function drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_imgs, slider_step, dm=false) {
+    var imageDataArray = new Array(N_imgs);
     var imageDataLens_WLmg = lens_WLmg.getImageData(0, 0, w, h);
-    r=25;
-    for(var y=0; y<h; y++){
-        for(var x=0; x<w; x++){
-            src_x = (x-origin_x) - alpha_x_WL[x][y]; //arbitrary deflection angle from array alpha_x,y
-            src_y = (origin_y-y) - alpha_y_WL[x][y];
-            index = (x + y*w)*4;
-            imageDataLens_WLmg.data[index] = 0; //take out red, dm is shown in blue
-            for(var i=0; i<N_gal_used; i++){
-                d_sq = (x_WLmg[i]-src_x)*(x_WLmg[i]-src_x) + (y_WLmg[i]-src_y)*(y_WLmg[i]-src_y);
-                if(d_sq<=r_WLmg[i]*r_WLmg[i]){
-                    gal_profile = imageData_profile(d_sq, r_WLmg[i]*r_WLmg[i]/(2.8*2.8));
-                    imageDataLens_WLmg.data[index] += gal_profile*red_WLmg[i];
-                    imageDataLens_WLmg.data[index+1] += gal_profile*green_WLmg[i];
-                    imageDataLens_WLmg.data[index+2] += gal_profile*100;
-                    imageDataLens_WLmg.data[index+3] = 255;
+    if(dm==true){
+        lens_WLmg.drawImage(img_kappa, 0, 0);
+        var helpimageData = lens_WLmg.getImageData(0, 0, w, h);
+        for(var y=0; y<h; y++){
+            for(var x=0; x<w; x++){
+                helpimageData.data[(x + y*w)*4] = 0; //take out red, dm is shown in blue
+                helpimageData.data[(x + y*w)*4+3] = 150;
+            }
+        }
+        lens_WLmg.putImageData(helpimageData, 0, 0);
+    }
+    for(var i=0; i<N_imgs; i++){
+        imageDataArray[i] = lens_WLmg.getImageData(0, 0, w, h);
+        for(var y=0; y<h; y++){
+            for(var x=0; x<w; x++){
+                var src_x = (x-origin_x) - alpha_x_WL[x][y]; //arbitrary deflection angle from array alpha_x,y
+                var src_y = (origin_y-y) - alpha_y_WL[x][y];
+                var index = (x + y*w)*4;
+                for(var j=0; j<slider_step; j++){
+                    var ind_gal = i*slider_step+j;
+                    var d_sq = (x_WLmg[ind_gal]-src_x)*(x_WLmg[ind_gal]-src_x) + (y_WLmg[ind_gal]-src_y)*(y_WLmg[ind_gal]-src_y);
+                    if(d_sq<=r_WLmg[ind_gal]*r_WLmg[ind_gal]){
+                        var gal_profile = imageData_profile(d_sq, r_WLmg[ind_gal]*r_WLmg[ind_gal]/(2.8*2.8));
+                        imageDataLens_WLmg.data[index] += gal_profile*red_WLmg[ind_gal];
+                        imageDataLens_WLmg.data[index+1] += gal_profile*green_WLmg[ind_gal];
+                        imageDataLens_WLmg.data[index+2] += gal_profile*100;
+                    }
                 }
+                imageDataArray[i].data[index] += imageDataLens_WLmg.data[index];
+                imageDataArray[i].data[index+1] += imageDataLens_WLmg.data[index+1];
+                imageDataArray[i].data[index+2] += imageDataLens_WLmg.data[index+2];
+                imageDataArray[i].data[index+3] = 255;
             }
         }
     }
-
-    //lens_WLmg.putImageData(imageDataLens_WLmg, 0, 0);
-    return imageDataLens_WLmg;
+    return imageDataArray;
 }
 
 //Structure map cursor
