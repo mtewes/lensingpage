@@ -69,9 +69,10 @@ var imageDataStr, imageDataStrhelp;
 
 //initialize images of flagship and small euclid satellite
 var img_structure = new Image();
+//img_structure.src = "images/Euclid_flagship_mock_galaxy_catalogue_cropped_small.jpg";
 img_structure.src = "images/Euclid_flagship_mock_galaxy_catalogue_cropped.jpg";
 var img_euclid = new Image();
-img_euclid.src = "images/Euclid_telescope_small.png";
+img_euclid.src = "images/Euclid_spacecraft.jpg";
 
 //-----------------------------------------------------------------------------//
 //Now load all canvases
@@ -254,25 +255,26 @@ window.onload = function() {
 
     //-----------------------------------------------------------------------------//
     //Structure canvas with Flagship dm distribution
-    let h_stripe = 200; //height of whole flagship image stripe on the canvas
-    let euclid_offset = 0.4*h_stripe*img_euclid.height/img_euclid.width; //offset off x-coord. due to the small eculid image
+    let h_stripe = 86; //height of whole flagship image stripe on the canvas
+    let h_space = 100; // space between stripe and image on the canvas
+    let euclid_offset = 1.0*h_stripe*img_euclid.height/img_euclid.width; //offset off x-coord. due to the small eculid image
     //draw the small euclid image, centered in h_stripe
     structure_map.drawImage(img_euclid, 0, 0, img_euclid.width, img_euclid.height, 0, (h_stripe-euclid_offset*img_euclid.height/img_euclid.width)/2, euclid_offset, euclid_offset*img_euclid.height/img_euclid.width)
 
-    let w_image = Math.round(canvas_Str.width/2); //width of flagship clipping on canvas
-    let h_image = canvas_Str.height - (h_stripe+60); //height of flagship clipping on canvas
-    let w_clip = h_image*(canvas_Str.width-euclid_offset)/h_stripe; //width of flagship clipping in original flagship image
+    let w_image = Math.round(canvas_Str.width/1); //width of flagship clipping on canvas
+    let h_image = canvas_Str.height - (h_stripe+h_space); //height of flagship clipping on canvas
+    let w_clip = h_stripe*(img_structure.width)/h_image; //width of flagship clipping in original flagship image (no, on canvas )
     let w_clip_stripe = w_clip*(canvas_Str.width-euclid_offset)/img_structure.width; //width of flagship clipping inside flagship stripe
     
     //draw flagship image stripe
     structure_map.drawImage(img_structure, 0, 0, img_structure.width, img_structure.height, euclid_offset, 0, canvas_Str.width-euclid_offset, h_stripe);
     //description above arrow
     structure_map.font = "18px Arial, sans-serif";
-    structure_map.fillStyle = 'rgb(200, 200, 200)';
+    structure_map.fillStyle = 'rgb(255, 255, 255)';
     structure_map.textAlign = "center";
     structure_map.fillText("Euclid blickt in die Vergangenheit", euclid_offset+(canvas_Str.width-euclid_offset)/2, h_stripe+18);
     //draw arrow for timeline
-    drawArrow(structure_map, euclid_offset, h_stripe+28, canvas_Str.width-8, h_stripe+28, 4, 'rgb(200, 200, 200)');
+    drawArrow(structure_map, euclid_offset, h_stripe+28, canvas_Str.width-8, h_stripe+28, 4, 'rgb(255, 255, 255)');
     //timeline description
     structure_map.textAlign = "left";
     structure_map.fillText("Heutiges Universum", euclid_offset, h_stripe+50);
@@ -297,7 +299,7 @@ window.onload = function() {
     var curXsold = curXs;
     //draw initial cursor and initial clipped image on canvas
     drawcursor(curXs, h_stripe, curXsold, w_clip_stripe);
-    structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+60, w_image, h_image);
+    structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+h_space, w_image, h_image);
     
     //update canvas on mousemove inside flagship image
     canvas_Str.addEventListener("mousemove", (e) => {
@@ -313,7 +315,7 @@ window.onload = function() {
             //save old cursor coordinate
             curXsold = curXs;
             //draw new clipped image
-            structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+60, w_image, h_image);
+            structure_map.drawImage(img_structure, (curXs-euclid_offset)/(canvas_Str.width-euclid_offset)*img_structure.width - w_clip/2, 0, w_clip, img_structure.height, (canvas_Str.width-w_image)/2, h_stripe+h_space, w_image, h_image);
         }
     });
     canvas_Str.addEventListener("touchmove", (e) => {
