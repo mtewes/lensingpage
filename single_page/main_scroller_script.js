@@ -51,7 +51,7 @@ let green_WLmg = new Array(N_gal);
 
 //Now assign random values for every galaxy
 for(var i=0; i<N_gal; i++){
-    r_WLmg[i] = getRanNum(15,25);
+    r_WLmg[i] = getRanNum(8,12); // orig values : 15 to 25
     x_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2); //galaxies should not be partially outside the canvas
     y_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2);
     red_WLmg[i] = getRanNum(200,255);
@@ -156,7 +156,7 @@ window.onload = function() {
         }
     }
     //normalize deflection angles to a reasonable WL value
-    let alpha_max_norm = 25;
+    let alpha_max_norm = 35; // orig value: 25
     for(var x=0; x<w; x++){
         for(var y=0; y<h; y++){
             alpha_x_WL[x][y] *= alpha_max_norm/255;
@@ -225,16 +225,49 @@ window.onload = function() {
     const N_imgs = Math.round(N_gal/slider_step);
     const imageDataArray = new Array(N_imgs); //store images of lensed galaxies
     const imageDataArray_dm = new Array(N_imgs); //here again but with dm distribution in the background
-    //Create and store images with dm background
+    
+    
     for(var i=0; i<N_imgs; i++){
         var n = N_gal_used+i*slider_step;
-        imageDataArray[i] = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, n);
+
+        r=25;
+        for(var y=0; y<h; y++){ // loop over pixels of the image plane
+            for(var x=0; x<w; x++){
+                src_x = (x-origin_x) - alpha_x_WL[x][y]; //arbitrary deflection angle from array alpha_x,y
+                src_y = (origin_y-y) - alpha_y_WL[x][y];
+                index = (x + y*w)*4;
+                imageDataLens_WLmg.data[index] = 0; //take out red, dm is shown in blue
+                for(var i=0; i<N_gal_used; i++){ // loop over source galaxies
+                    d_sq = (x_WLmg[i]-src_x)*(x_WLmg[i]-src_x) + (y_WLmg[i]-src_y)*(y_WLmg[i]-src_y); // dist squared between position and gal center
+                    if(d_sq<=r_WLmg[i]*r_WLmg[i]){
+                        gal_profile = imageData_profile(d_sq, r_WLmg[i]*r_WLmg[i]/(2.8*2.8));
+                        imageDataLens_WLmg.data[index] += gal_profile*red_WLmg[i];
+                        imageDataLens_WLmg.data[index+1] += gal_profile*green_WLmg[i];
+                        imageDataLens_WLmg.data[index+2] += gal_profile*100;
+                        imageDataLens_WLmg.data[index+3] = 255;
+                    }
+                }
+            }
+    }
+
+
+
+
+        //imageDataArray[i] = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, n);
     }
     //Now create and store images with dm background
     lens_WLmg.drawImage(img_kappa, 0, 0);
+    const img_kappa_data = lens_WLmg.getImageData(0, 0, w, h).data
     for(var i=0; i<N_imgs; i++){
-        var n = N_gal_used+i*slider_step;
-        imageDataArray_dm[i] = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, n);
+        // var n = N_gal_used+i*slider_step;
+        // imageDataArray_dm[i] = drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, n);
+        imageDataArray_dm[i] = imageDataArray[i];
+        const data = imageDataArray_dm[i].data;
+        //const img_kappa_data = img_kappa.data;
+        for (let i = 0; i < data.length; i += 4) {
+            data[i + 2] = img_kappa_data[i + 2]; // blue
+          }
+        
     }
     lens_WLmg.putImageData(imageDataArray[0], 0, 0);
 
@@ -448,14 +481,14 @@ function drawcanvas_WLsg(beta_x, beta_y, alpha_x_WL, alpha_y_WL) {
 function drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_gal_used) {
     var imageDataLens_WLmg = lens_WLmg.getImageData(0, 0, w, h);
     r=25;
-    for(var y=0; y<h; y++){
+    for(var y=0; y<h; y++){ // loop over pixels of the image plane
         for(var x=0; x<w; x++){
             src_x = (x-origin_x) - alpha_x_WL[x][y]; //arbitrary deflection angle from array alpha_x,y
             src_y = (origin_y-y) - alpha_y_WL[x][y];
             index = (x + y*w)*4;
             imageDataLens_WLmg.data[index] = 0; //take out red, dm is shown in blue
-            for(var i=0; i<N_gal_used; i++){
-                d_sq = (x_WLmg[i]-src_x)*(x_WLmg[i]-src_x) + (y_WLmg[i]-src_y)*(y_WLmg[i]-src_y);
+            for(var i=0; i<N_gal_used; i++){ // loop over source galaxies
+                d_sq = (x_WLmg[i]-src_x)*(x_WLmg[i]-src_x) + (y_WLmg[i]-src_y)*(y_WLmg[i]-src_y); // dist squared between position and gal center
                 if(d_sq<=r_WLmg[i]*r_WLmg[i]){
                     gal_profile = imageData_profile(d_sq, r_WLmg[i]*r_WLmg[i]/(2.8*2.8));
                     imageDataLens_WLmg.data[index] += gal_profile*red_WLmg[i];
