@@ -1,3 +1,15 @@
+// detect language
+
+let browser_language = navigator.language;
+let language = "en"; // default is english
+console.log(browser_language)
+// and now we check what the browser_language contains:
+if(browser_language.indexOf("de") >= 0) {
+    language = "de";
+ }
+ console.log(language)
+
+
 //initialize Strong Lensing canvas
 var imageDataLensSL, imageDataSrcSL;
 
@@ -98,10 +110,10 @@ window.onload = function() {
 
     var scrollX = 0;
     var scrollY = 0;
-    document.addEventListener("wheel", (e) =>{ //offset of mouse coordinates due to scrolling
-        scrollX = e.deltaX;
-        scrollY = e.deltaY;
-    })
+    //document.addEventListener("wheel", (e) =>{ //offset of mouse coordinates due to scrolling
+    //    scrollX = e.deltaX;
+    //    scrollY = e.deltaY;
+    //})
     let curX;
     let curY;
     //if mouse is moved inside canvas -> update source galaxy on canvas
