@@ -1,12 +1,11 @@
 <!doctype html>
 <html lang="en" class="h-100" data-bs-theme="auto">
-  <head><script src="bootstrap/js/color-modes.js"></script>
-
+  <head>
+    <script src="bootstrap/js/color-modes.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Wie kann Euclid das dunkle Universum sehen?">
-    <title>Wie kann Euclid das dunkle Universum sehen?</title>
-    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">-->
+    <title>Weak lensing: how Euclid probes the dark Universe</title>
     <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="images/Euclid_telescope_small.png">
 
@@ -94,87 +93,56 @@
 
     </style>
 
-    
-    <!-- Custom styles for this template -->
-    <!--<link href="cover.css" rel="stylesheet">-->
   </head>
   <body class="d-flex h-100 text-start text-light">
-    
-    <!--
-    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-      <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
-              id="bd-theme"
-              type="button"
-              aria-expanded="false"
-              data-bs-toggle="dropdown"
-              aria-label="Toggle theme (auto)">
-        <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
-        <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
-            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#sun-fill"></use></svg>
-            Light
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
-            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
-            Dark
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-        <li>
-          <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="true">
-            <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#circle-half"></use></svg>
-            Auto
-            <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
-          </button>
-        </li>
-      </ul>
-    </div>
-    -->
+  
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  
+      <header class="mb-auto">
+        <div>
+          <nav class="nav nav-masthead float-md-end">
+            <a class="nav-link py-1 px-0" onclick="changeLanguage('en')">English</a>
+            <a class="nav-link py-1 px-0" onclick="changeLanguage('de')">Deutsch</a>
+          </nav>
+        </div>
+      </header>
 
+      <main class="px-3">
+      <br>
+      <h1>
+        <span lang="en">How can Euclid observe the dark Universe?</span>
+        <span lang="de">Wie kann Euclid das dunkle Universum sehen?</span>
+      </h1>
+      <br>
     
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
-    <div>
-      <!--<h3 class="float-md-start mb-0">Cover</h3>-->
-      <!--<nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link py-1 px-0 active" aria-current="page" href="#">Abgelenktes Licht</a>
-        <a class="nav-link py-1 px-0" href="#">Schwacher Gravitationslinseneffekt </a>
-        <a class="nav-link py-1 px-0" href="#">Dunkle Materie</a>
-      -->
-      </nav>
-    </div>
-  </header>
-
-  <main class="px-3">
-    <br>
-    <h1>Wie kann Euclid das <br><i>dunkle</i> Universum sehen?</h1>
-    <br>
-    <!--<p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>-->
-    <!--<p class="lead">
-      <a href="#" class="btn btn-lg btn-light fw-bold border-white bg-white">Learn more</a>
-    </p>-->
-<p>
-  Dieser kleine rote Fleck da unten ist eine unscheinbare entfernte Galaxie, wie es Milliarden von ihnen in unserem Universum gibt.
-</p>
-<p>Manchmal befindet sich so eine Galaxie direkt <i>hinter</i> einer näherliegenden Galaxie, hier gelb dargestellt.</p>
-<p><strong>Bewege</strong> die rote Galaxie mal hinter die gelbe!</p>
+      <span lang="en">
+  <p>That little red spot down there is an inconspicuous distant galaxy, as there are billions of them in the Universe.</p>
+  <p>Sometimes, such a galaxy happens to be located directly <i>behind</i> a closer galaxy, shown here in yellow.</p>
+  <p><strong>Move</strong> the red galaxy behind the yellow one!</p>
+      </span>
+      <span lang="de">
+  <p>Dieser kleine rote Fleck da unten ist eine unscheinbare entfernte Galaxie, wie es Milliarden von ihnen in unserem Universum gibt.</p>
+  <p>Manchmal befindet sich so eine Galaxie direkt <i>hinter</i> einer näherliegenden Galaxie, hier gelb dargestellt.</p>
+  <p><strong>Bewege</strong> die rote Galaxie mal hinter die gelbe!</p>
+      </span>
 
 <p>
 <canvas id="strong_lensing" width="700", height="700" style="width:100%; cursor: crosshair;"></canvas>
 </p>
-<p>
-Das Licht der hinteren roten Galaxie wird durch die Schwerkraft der gelben Galaxie abgelenkt. Daher siehst du nur ein stark verzerrtes Bild der roten Galaxie, oder du siehst sie sogar mehrmals!  
-Man nennt dieses Phänomen den <i>starken Gravitationslinseneffekt</i>.
-</p>
-<p>
-  Und den gibt es wirklich! Hier ein paar beispielhafte Aufnahmen der Weltraumteleskope Hubble und Euclid, die uns den starken Gravitationslinseneffekt eindeutig zeigen. Wir kennen bislang hunderte solcher starken Gravitationslinsen.
-</p>
+
+<span lang="en">
+  <p>
+    The light from the red distant galaxy gets deflected by the gravity of the somewhat closer yellow galaxy.
+    As a consequence, our view of the red galaxy is highly distorted. Depending on its position, you might even see multiple images of the same galaxy. This effect is called <i>strong gravitational lensing</i>.
+  </p> 
+  <p>
+    And amazingly, we do really see this! Below are a few images taken with the space telescopes Hubble and Euclid, which all clearly show strong gravitational lensing in action. We currently know several hundreds of such places on the sky.
+  </p>
+</span>
+<span lang="de">
+  <p>Das Licht der hinteren roten Galaxie wird durch die Schwerkraft der gelben Galaxie abgelenkt. Daher siehst du nur ein stark verzerrtes Bild der roten Galaxie, oder du siehst sie sogar mehrmals! Man nennt dieses Phänomen den <i>starken Gravitationslinseneffekt</i>.</p>
+  <p>Und den gibt es wirklich! Hier ein paar beispielhafte Aufnahmen der Weltraumteleskope Hubble und Euclid, die uns den starken Gravitationslinseneffekt eindeutig zeigen. Wir kennen bislang hunderte solcher starken Gravitationslinsen.</p>
+</span>
 
 
 <figure class="figure" style="margin: 0px; border: 1px solid #000; float: center; width: 100%; text-indent: 0px;">
@@ -221,43 +189,6 @@ Man nennt dieses Phänomen den <i>starken Gravitationslinseneffekt</i>.
     </button>
   </div>
 
-  
-
-  <!--<figcaption class="figure-caption">
-    <div class="d-grid gap-2">
-      <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
-          <a class="btn btn-dark btn-sm" data-bs-toggle="collapse" href="#jwst_collapse" role="button" aria-expanded="false" aria-controls="jwst_collapse">
-              Beobachtungen des Gravitationslinseneffekts mit dem JWST und dem HST, aber was ist hier eigentlich genau zu sehen? &#9663;</h5>
-          </a>
-          <div class="collapse" id="jwst_collapse">
-              <div class="card card-body" style="background-color: #78788f">
-                <ol style="font-weight: bold">
-                  <li>
-                  Im ersten Bild sind tausende Galaxien in verschiedenen Entfernungen zu sehen. Im Vordergrund des Bildes befinden sich die weißen Galaxien, wie die große elliptische Galaxie im Zentrum.
-                  Um diese herum sind andere, kleinere weiße Galaxien verteilt, die zusammen einen Galaxienhaufen bilden.
-                  Daneben sind allerdings auch viele deutlich rötere Galaxien abgebildet, die sich von uns aus betrachtet hinter dem Galaxienhaufen befinden. Die Formen dieser Galaxien weichen in der Regel
-                  allerdings stark von denen der weißen Galaxien im Galaxienhaufen ab - es sind zahlreiche stark verzerrte Bögen zu erkennen, die alles andere als eine natürliche Form einer Galaxie darstellen
-                  und sich nur durch die Wirkung des Gravitationslinseneffekts erklären lassen.
-                  </li>
-                  <br>
-                  <li>
-                  Im zweiten Bild wird das Licht einer Hintergrundgalaxie von der Gravitation des im Vordergrund liegenden Galaxienhaufens abgelenkt. Das resultierende
-                  Bild der Galaxie erscheint so stark vergrößert und verzerrt, dass es eine Ringform annimmt - bei diesem Phänomen sprechen wir von einem Einstein Ring.
-                  </li>
-                  <br>
-                  <li>
-                  Das dritte Bild zeigt ein Beispiel der mehrfachen Abbildung ein und desselben Objekts (hier ein Quasar) durch den Gravitationslinseneffekt.
-                  Im Vordergrund befinden sich zwei Galaxien, deren Masse das Licht des dahinterliegenden Quasars so ablenkt, dass dieser fünffach abgebildet wird.
-                  Vier Bilder sind auf einem Ring um die Gravitationslinse angeordnet und tatsächlich befindet sich noch ein weiteres Bild im Zentrum der Linse.
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>
-      </div>
-  </figcaption>
-
--->
 </figure>
 
 <br>
@@ -265,8 +196,7 @@ Man nennt dieses Phänomen den <i>starken Gravitationslinseneffekt</i>.
 <p>
 Wir sehen also gar nicht, wo so eine Hintergrundgalaxie wirklich ist, sondern nur ihr verzerrtes Bild an der durch den <i>Gravitationslinseneffekt</i> scheinbar verschobenen Position. 
 </p> 
-    
-<!--    <h2>Und nun zum <i>schwachen</i> Gravitationslinseneffekt</h2> -->
+
 <p>
 Die meisten Galaxien, die wir beobachten können, werden allerdings nicht stark verzerrt, da ihr Licht nicht nahe genug an massereichen Objekten im Vordergrund vorbeiläuft
 - dennoch wird ihr Licht geringfügig beeinflusst. In diesem Fall reden wir vom <i>schwachen Gravitationslinseneffekt</i>.
@@ -346,15 +276,14 @@ Die Daten von Euclid und der schwache Gravitationslinseneffekt werden uns ermög
         
 
 
-
   </main>
 
-  <footer class="mt-auto text-white-50">
+    <footer class="mt-auto text-white-50">
     <p>Jonathan Oel & Malte Tewes, ESERO Germany / Uni Bonn, CC BY-SA 4.0</p>
-  </footer>
-</div>
-<!--<script type="text/javascript" src="stronglens.js"></script>-->
-<script type="text/javascript" src="main_scroller_script.js"></script>
-<script src="bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    </footer>
+    </div>
+
+    <script type="text/javascript" src="main_scroller_script.js"></script>
+    <script src="bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>

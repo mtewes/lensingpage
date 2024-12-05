@@ -9,6 +9,38 @@ if(browser_language.indexOf("de") >= 0) {
  }
  console.log(language)
 
+// language modes:
+const de_matches = document.querySelectorAll("span[lang='de']");
+const en_matches = document.querySelectorAll("span[lang='en']");
+
+
+function changeLanguage(lang) { // to be cleaned up -- this is just a demonstrator for now
+    if (lang === "de") {
+        document.title = "Der schwache Gravitationslinseneffekt: wie Euclid das dunkle Universum sehen kann";
+        de_matches.forEach((item) => {
+            item.style.display ="inline";
+          });
+        en_matches.forEach((item) => {
+            item.style.display ="none";
+          });
+      }
+    if (lang === "en") {
+        document.title = "Weak lensing: how Euclid probes the dark Universe";
+        en_matches.forEach((item) => {
+            //item.style.visibility = "hidden";
+            item.style.display ="inline";
+            //console.log(item);
+          });
+        de_matches.forEach((item) => {
+            //item.style.visibility = "hidden";
+            item.style.display ="none";
+            //console.log(item);
+          });
+      }
+}
+
+changeLanguage(language);
+
 
 //initialize Strong Lensing canvas
 var imageDataLensSL, imageDataSrcSL;
