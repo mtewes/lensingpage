@@ -1,3 +1,90 @@
+// detect language
+
+let browser_language = navigator.language;
+let selected_language = "en"; // default is english
+console.log("browser_language: ", browser_language)
+// and now we check what the browser_language contains:
+if(browser_language.indexOf("de") >= 0) {
+    selected_language = "de";
+ }
+ console.log("selected_language: ", selected_language)
+
+
+
+ // language modes:
+const en_matches = document.querySelectorAll("span[lang='en']");
+const de_matches = document.querySelectorAll("span[lang='de']");
+
+const titlestrings_container = document.querySelector("#titlestrings");
+const struct_text_1_container = document.querySelector("#struct_text_1");
+const struct_text_2_container = document.querySelector("#struct_text_2");
+const struct_text_3_container = document.querySelector("#struct_text_3");
+
+var struct_text_1;
+var struct_text_2;
+var struct_text_3;
+
+
+
+function updateTitle(lang) {
+    // We get the hidden title from the html, and write this to the page header title
+    // can't be done directly as we don't want all languages in that title
+    
+    var title_match;
+
+    if (lang === "en") {
+        title_match = titlestrings_container.querySelectorAll("span[lang='en']")[0];
+    }
+    if (lang === "de") {
+        title_match = titlestrings_container.querySelectorAll("span[lang='de']")[0];
+    }
+    
+    title_match = title_match.innerText;
+    console.log("title_match: ", title_match);
+    document.title = title_match;
+
+}
+
+function changeLanguage(lang) {
+    // this can be called immediately after the html is read,
+    // no need for the canvas stuff
+    // to be cleaned up -- this is just a demonstrator for now
+
+    console.log("changeLanguage: ", lang);
+
+    if (lang === "de") {
+        de_matches.forEach((item) => {
+            item.style.display ="inline";
+          });
+        en_matches.forEach((item) => {
+            item.style.display ="none";
+          });
+    }
+    if (lang === "en") {
+        en_matches.forEach((item) => {
+            //item.style.visibility = "hidden";
+            item.style.display ="inline";
+            //console.log(item);
+          });
+        de_matches.forEach((item) => {
+            item.style.display ="none";
+          });
+    }
+    
+    updateTitle(lang);
+    
+    try { // this might fail if the canvases are not yet initialised
+        drawArrowFull(lang);
+    } 
+    catch(err){
+        // nothing
+    }
+
+}
+
+changeLanguage(selected_language);
+
+
 //initialize Strong Lensing canvas
 var imageDataLensSL, imageDataSrcSL;
 
@@ -20,7 +107,7 @@ for(var i=0; i<w; i++){
 }
 
 //-----------------------------------------------------------------------------//
-//initialize Weak Lenisng canvas with single galaxy
+//initialize Weak Lensing canvas with single galaxy
 var imageDataLens_WLsg, imageDataSrc_WLsg, imageDataAlphax, imageDataAlphay;
 
 var canvas_WLsg = document.getElementById('wl_kappa_map');
@@ -35,7 +122,7 @@ var img_kappa = new Image();
 img_kappa.src = "images/kappa_flagship_1.png";
 
 //-----------------------------------------------------------------------------//
-//initialize Weak Lenisng canvas with many galaxies
+//initialize Weak Lensing canvas with many galaxies
 //var imageDataLens_WLmg, imageDataSrc_WLmg, black;
 
 var canvas_WLmg = document.getElementById('grid_lens');
@@ -74,10 +161,19 @@ img_structure.src = "images/Euclid_flagship_mock_galaxy_catalogue_cropped.jpg";
 var img_euclid = new Image();
 img_euclid.src = "images/Euclid_spacecraft.jpg";
 
+var lookbacktime = 0;
+
+const h_stripe = 86; //height of whole flagship image stripe on the canvas
+const h_space = 100; // space between stripe and image on the canvas
+const euclid_offset = 1.0*h_stripe //*img_euclid.height/img_euclid.width; //offset off x-coord. due to the small eculid image
+ 
+
 //-----------------------------------------------------------------------------//
 //Now load all canvases
 window.onload = function() {
 
+
+    
     //SL canvas
     lensSL.fillStyle = 'black'; //Fill the canvas black
     lensSL.fillRect(0,0,w,h);
@@ -98,10 +194,10 @@ window.onload = function() {
 
     var scrollX = 0;
     var scrollY = 0;
-    document.addEventListener("wheel", (e) =>{ //offset of mouse coordinates due to scrolling
-        scrollX = e.deltaX;
-        scrollY = e.deltaY;
-    })
+    //document.addEventListener("wheel", (e) =>{ //offset of mouse coordinates due to scrolling
+    //    scrollX = e.deltaX;
+    //    scrollY = e.deltaY;
+    //})
     let curX;
     let curY;
     //if mouse is moved inside canvas -> update source galaxy on canvas
@@ -183,7 +279,7 @@ window.onload = function() {
         var touch = e.touches[0];
         var mouseEvent = new MouseEvent("mousemove", {
             clientX: touch.clientX,
-            clientY: touch.clientY
+            clientY: touch.clientY-70 // some shift to get the galaxy above the finger... 
         });
         canvas_WLsg.dispatchEvent(mouseEvent);
     });
@@ -266,9 +362,14 @@ window.onload = function() {
 
     //-----------------------------------------------------------------------------//
     //Structure canvas with Flagship dm distribution
-    let h_stripe = 86; //height of whole flagship image stripe on the canvas
-    let h_space = 100; // space between stripe and image on the canvas
-    let euclid_offset = 1.0*h_stripe*img_euclid.height/img_euclid.width; //offset off x-coord. due to the small eculid image
+    
+    // THIS IS NOW DEFINED ON TOP
+    //let h_stripe = 86; //height of whole flagship image stripe on the canvas
+    //let h_space = 100; // space between stripe and image on the canvas
+    //let euclid_offset = 1.0*h_stripe*img_euclid.height/img_euclid.width; //offset off x-coord. due to the small eculid image
+    //let euclid_offset = 1.0*h_stripe
+    
+    
     //draw the small euclid image, centered in h_stripe
     structure_map.drawImage(img_euclid, 0, 0, img_euclid.width, img_euclid.height, 0, (h_stripe-euclid_offset*img_euclid.height/img_euclid.width)/2, euclid_offset, euclid_offset*img_euclid.height/img_euclid.width)
 
@@ -279,18 +380,13 @@ window.onload = function() {
     
     //draw flagship image stripe
     structure_map.drawImage(img_structure, 0, 0, img_structure.width, img_structure.height, euclid_offset, 0, canvas_Str.width-euclid_offset, h_stripe);
-    //description above arrow
-    structure_map.font = "18px Arial, sans-serif";
-    structure_map.fillStyle = 'rgb(255, 255, 255)';
-    structure_map.textAlign = "center";
-    structure_map.fillText("Euclid blickt in die Vergangenheit", euclid_offset+(canvas_Str.width-euclid_offset)/2, h_stripe+18);
+    
     //draw arrow for timeline
-    drawArrow(structure_map, euclid_offset, h_stripe+28, canvas_Str.width-8, h_stripe+28, 4, 'rgb(255, 255, 255)');
-    //timeline description
-    structure_map.textAlign = "left";
-    structure_map.fillText("Heutiges Universum", euclid_offset, h_stripe+50);
-    structure_map.textAlign = "right";
-    structure_map.fillText("Universum vor 11 Milliarden Jahren", canvas_Str.width, h_stripe+50);
+    //writeArrowText(structure_map, canvas_Str, struct_texts[selected_language], euclid_offset, h_stripe, h_space);
+    //drawArrow(structure_map, euclid_offset, h_stripe+28, canvas_Str.width-8, h_stripe+28, 4, 'rgb(255, 255, 255)');
+    
+    drawArrowFull(selected_language);
+    //writeArrowTextLang(language);
     
     imageDataStr = structure_map.getImageData(0,0,canvas_Str.width,canvas_Str.height);
     imageDataStrhelp = structure_map.getImageData(0,0,canvas_Str.width,canvas_Str.height);
@@ -340,7 +436,10 @@ window.onload = function() {
         canvas_Str.dispatchEvent(mouseEvent);
     });
 
-    console.log(window.performance.memory);
+    
+    //changeLanguage(language); // we update the language again as the canvas is now loaded.
+
+    //console.log(window.performance.memory);
 };
 
 //SL canvas: draw lens galaxy and calculate deflection angles
@@ -512,8 +611,55 @@ function drawcursor(curXs, h_stripe, curXsold, w_clip_stripe){
         }
     }
     //load imageData into canvas
-    structure_map.putImageData(imageDataStr, 0, 0);
+    structure_map.putImageData(imageDataStr, 0, 0, 0, 0, canvas_Str.width, h_stripe);
+
+    // update lookbacktime value
+    //lookbacktime = 10.8 * (curXs - w_clip_stripe/2 - euclid_offset)/(canvas_Str.width - w_clip_stripe - euclid_offset);
+    lookbacktime = 10.8 * (curXs - euclid_offset)/(canvas_Str.width - w_clip_stripe/2 - euclid_offset);
+    
+    //console.log("lookbacktime: ", lookbacktime)
+    writeLookbacktime(structure_map, canvas_Str, selected_language, euclid_offset, h_stripe, h_space);
 }
+
+function writeLookbacktime(ctx, canvas, lang, euclid_offset, h_stripe, h_space){
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, h_stripe, canvas.width-50, 23);
+    ctx.font = "18px Arial, sans-serif";
+    ctx.fillStyle = 'rgb(255, 255, 255)';
+    ctx.textAlign = "center";
+    ctx.fillText(struct_text_1.replace("XXX", lookbacktime.toFixed(1)), euclid_offset+(canvas.width-euclid_offset)/2, h_stripe+18);
+
+}
+
+function writeArrowText(ctx, canvas, lang, euclid_offset, h_stripe, h_space){
+    // ctx is the context to draw on
+    // get the strings from the html document:
+    
+    if (lang === "en") {
+        struct_text_1 = struct_text_1_container.querySelectorAll("span[lang='en']")[0].innerText;
+        struct_text_2 = struct_text_2_container.querySelectorAll("span[lang='en']")[0].innerText;
+        struct_text_3 = struct_text_3_container.querySelectorAll("span[lang='en']")[0].innerText;
+    }
+    if (lang === "de") {
+        struct_text_1 = struct_text_1_container.querySelectorAll("span[lang='de']")[0].innerText;
+        struct_text_2 = struct_text_2_container.querySelectorAll("span[lang='de']")[0].innerText;
+        struct_text_3 = struct_text_3_container.querySelectorAll("span[lang='de']")[0].innerText;
+    }
+    // and write them to the canvas, after filling the area with black:
+    // the rest are some geometric offsets
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, h_stripe, canvas.width, h_space);
+    ctx.font = "18px Arial, sans-serif";
+    ctx.fillStyle = 'rgb(255, 255, 255)';
+    ctx.textAlign = "center";
+    ctx.fillText(struct_text_1.replace("XXX", lookbacktime.toFixed(1)), euclid_offset+(canvas.width-euclid_offset)/2, h_stripe+18);
+    ctx.textAlign = "left";
+    ctx.fillText(struct_text_2, euclid_offset, h_stripe+50);
+    ctx.textAlign = "right";
+    ctx.fillText(struct_text_3, canvas.width, h_stripe+50);
+}
+
+
 
 function drawArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color){
     //taken from https://codepen.io/chanthy/pen/WxQoVG
@@ -548,6 +694,16 @@ function drawArrow(ctx, fromx, fromy, tox, toy, arrowWidth, color){
     //draws the paths created above
     ctx.stroke();
     ctx.restore();
+}
+
+function drawArrowFull(lang) {
+    // top-level wrapper to write arrow and the text in language lang
+    writeArrowText(structure_map, canvas_Str, lang, euclid_offset, h_stripe, h_space);
+    drawArrow(structure_map, euclid_offset, h_stripe+28, canvas_Str.width-8, h_stripe+28, 4, 'rgb(255, 255, 255)');
+    
+    //imageDataStr = structure_map.getImageData(0,0,canvas_Str.width,canvas_Str.height);
+    //imageDataStrhelp = structure_map.getImageData(0,0,canvas_Str.width,canvas_Str.height);
+
 }
 
 //Give brightness of galaxy pixel according to its distance d from the galaxy center,
