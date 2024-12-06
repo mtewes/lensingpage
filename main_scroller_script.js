@@ -279,7 +279,7 @@ window.onload = function() {
         var touch = e.touches[0];
         var mouseEvent = new MouseEvent("mousemove", {
             clientX: touch.clientX,
-            clientY: touch.clientY
+            clientY: touch.clientY-30 // some shift to get the galaxy above the finger... 
         });
         canvas_WLsg.dispatchEvent(mouseEvent);
     });
