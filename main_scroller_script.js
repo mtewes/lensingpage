@@ -279,7 +279,7 @@ window.onload = function() {
         var touch = e.touches[0];
         var mouseEvent = new MouseEvent("mousemove", {
             clientX: touch.clientX,
-            clientY: touch.clientY-30 // some shift to get the galaxy above the finger... 
+            clientY: touch.clientY-100 // some shift to get the galaxy above the finger... 
         });
         canvas_WLsg.dispatchEvent(mouseEvent);
     });
@@ -614,7 +614,9 @@ function drawcursor(curXs, h_stripe, curXsold, w_clip_stripe){
     structure_map.putImageData(imageDataStr, 0, 0, 0, 0, canvas_Str.width, h_stripe);
 
     // update lookbacktime value
-    lookbacktime = 10.8 * (curXs - w_clip_stripe/2 - euclid_offset)/(canvas_Str.width - w_clip_stripe - euclid_offset);
+    //lookbacktime = 10.8 * (curXs - w_clip_stripe/2 - euclid_offset)/(canvas_Str.width - w_clip_stripe - euclid_offset);
+    lookbacktime = 10.8 * (curXs - euclid_offset)/(canvas_Str.width - w_clip_stripe/2 - euclid_offset);
+    
     //console.log("lookbacktime: ", lookbacktime)
     writeLookbacktime(structure_map, canvas_Str, selected_language, euclid_offset, h_stripe, h_space);
 }
