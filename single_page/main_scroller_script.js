@@ -145,7 +145,7 @@ var imageDataStr, imageDataStrhelp;
 //initialize images of flagship and small euclid satellite
 var img_structure = new Image();
 //img_structure.src = "images/Euclid_flagship_mock_galaxy_catalogue_cropped_small.jpg";
-img_structure.src = "images/Euclid_flagship_mock_galaxy_catalogue_cropped.jpg";
+img_structure.src = "images/Euclid_flagship_mock_galaxy_catalogue_cropped_testblue_small.jpg";
 var img_euclid = new Image();
 img_euclid.src = "images/Euclid_spacecraft.jpg";
 
