@@ -605,9 +605,9 @@ function sample_galaxies(){
     for(var i=0; i<N_gal; i++){
         var xind = Math.round(getRanNum(0, w));
         var yind = Math.round(getRanNum(0, h));
-        var like = sample_dist[xind+yind*w]/c;
+        var like = sample_dist[xind+(h-yind)*w]/c; // Replaced yind by (h-yind) here...quick and dirty fix
         var u = getRanNum(0.,1.);
-        if(u<Math.pow(like,1.5)){ // The higher this power, the stronger galaxy positions are biased to dense regions
+        if(u<Math.pow(like,0.8)){ // The higher this power, the stronger galaxy positions are biased to dense regions
             x_WLmg[i] = xind - 0.5*w;
             y_WLmg[i] = yind - 0.5*h;
             r_WLmg[i] = getRanNum(5,12)*(1.5-like); // Fit galaxy size artificially to inverse density
