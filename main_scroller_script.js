@@ -136,18 +136,6 @@ let y_WLmg = new Array(N_gal);
 let red_WLmg = new Array(N_gal); //colors
 let green_WLmg = new Array(N_gal);
 
-//Now assign random values for every galaxy
-for(var i=0; i<N_gal; i++){
-    r_WLmg[i] = getRanNum(4,20);
-    x_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2); //galaxies should not be partially outside the canvas
-    y_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2);
-    red_WLmg[i] = getRanNum(200,255);
-    green_WLmg[i] = getRanNum(70,130);
-    //prevent an overlap of two galaxies;
-    //if there is overlap -> generate new x,y until there is no overlap anymore
-    if(checkOverlap(i,x_WLmg,y_WLmg,r_WLmg) == true){i--;}
-}
-
 //-----------------------------------------------------------------------------//
 //initialize Structure canvas with Flagship image
 var canvas_Str = document.getElementById('structure_map');
@@ -254,6 +242,7 @@ window.onload = function() {
     }
     //normalize deflection angles to a reasonable WL value
     let alpha_max_norm = 50;
+    //let alpha_max_norm = 0;
     for(var x=0; x<w; x++){
         for(var y=0; y<h; y++){
             alpha_x_WL[x][y] *= alpha_max_norm/255;
@@ -313,6 +302,20 @@ window.onload = function() {
     let gal_num_range = document.getElementById('gal_num');
     var N_gal_used = Number(gal_num_range.value);
     document.getElementById('gal_num_out').value = N_gal_used; //print number of drawn galaxies
+
+    //Now assign random values for every galaxy
+    //T Distribute galaxies via rejection sampling according to kappa map
+    sample_galaxies();
+    for(var i=0; i<N_gal; i++){
+        //r_WLmg[i] = getRanNum(4,20);
+        //x_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2); //galaxies should not be partially outside the canvas
+        //y_WLmg[i] = getRanNum(-0.9*w/2, 0.9*w/2);
+        red_WLmg[i] = getRanNum(200,255);
+        green_WLmg[i] = getRanNum(70,130);
+        //prevent an overlap of two galaxies;
+        //if there is overlap -> generate new x,y until there is no overlap anymore
+        //if(checkOverlap(i,x_WLmg,y_WLmg,r_WLmg) == true){i--;}
+    }
 
     //Create many images initially and store them, so we just need to load them when updating N_gal_used
     const slider_step = Number(gal_num_range.step);
@@ -582,6 +585,47 @@ function drawcanvas_WLmg(alpha_x_WL, alpha_y_WL, N_imgs, slider_step, dm=false) 
         }
     }
     return imageDataArray;
+}
+
+function sample_galaxies(){
+    // Rejection sampling of galaxy positions
+    lens_WLmg.drawImage(img_kappa, 0, 0);
+    var helpimageData = lens_WLmg.getImageData(0, 0, w, h);
+    var len = w*h;
+    var sample_dist = new Array(len);
+    for(var y=0; y<h; y++){
+        for(var x=0; x<w; x++){
+            var index = x + y*w;
+            // Use blue entries to sample the galaxies
+            sample_dist[index] = helpimageData.data[index*4 + 2];
+        }
+    }
+    //var Q = 1./(w*h);
+    var c = getMax(sample_dist);
+    for(var i=0; i<N_gal; i++){
+        var xind = Math.round(getRanNum(0, w));
+        var yind = Math.round(getRanNum(0, h));
+        var like = sample_dist[xind+(h-yind)*w]/c; // Replaced yind by (h-yind) here...quick and dirty fix
+        var u = getRanNum(0.,1.);
+        if(u<Math.pow(like,0.8)){ // The higher this power, the stronger galaxy positions are biased to dense regions
+            x_WLmg[i] = xind - 0.5*w;
+            y_WLmg[i] = yind - 0.5*h;
+            r_WLmg[i] = getRanNum(5,12)*(1.5-like); // Fit galaxy size artificially to inverse density
+            if(checkOverlap(i,x_WLmg,y_WLmg,r_WLmg) == true){i--;}
+        } else{
+            i--;
+        }
+    }
+    lens_WLmg.fillRect(0,0,w,h);
+}
+function getMax(arr) {
+    let len = arr.length;
+    let max = -Infinity;
+
+    while (len--) {
+        max = arr[len] > max ? arr[len] : max;
+    }
+    return max;
 }
 
 //Structure map cursor
